@@ -14,58 +14,58 @@ import MainListing from "./components/MainListing/MainListing";
 const fm = new Fortmatic("pk_test_C0C9ADE8AD6C86A9");
 let web3 = new Web3(fm.getProvider());
 
-let addr = "";
+// let addr = "";
 let box;
 
 export default function App() {
-  const [listings, setListings] = useState([]);
-  
+	const [listings, setListings] = useState([]);
+	const [addr, setAddr] = useState("");
+
 	useEffect(() => {
-    const fetchListings = async () => {
-      const result = await axios(
-        'http://localhost:3001/api/listings',
-      );
-      setListings(result.data);
-      console.log("Fetched listings")
-    };
+		const fetchListings = async () => {
+			const result = await axios("http://localhost:3001/api/listings");
+			setListings(result.data);
+			console.log("Fetched listings");
+		};
 
-    const loginUser = async () => {
-      web3.eth.getAccounts().then(async address => {
-        addr = address[0];
-        console.log("Address: ", addr);
-        await open3Box();
-        await set3BoxData("testing", "value");
-        await get3BoxData("testing");
-        await remove3BoxData("testing");
-      });
-    }
+		const loginUser = async () => {
+			web3.eth.getAccounts().then(async address => {
+				setAddr(address[0]);
+				// addr = address[0]
+				console.log("Address: ", address[0]);
+				await open3Box(address[0]);
+				await set3BoxData("testing", "value");
+				await get3BoxData("testing");
+				await remove3BoxData("testing");
+			});
+		};
 
-    fetchListings();
-    loginUser();
-  }, []);
+		fetchListings();
+		loginUser();
+	}, []);
 
 	return (
 		<Router>
 			<div>
 				{/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
-        <Switch>
-          <Route path="/lockcontrols">
-            <LockControls />
-          </Route>
-          <Route path="/">
-            <Home listings={listings}/>
-          </Route>
-          <Route path="/listings">
-            <Listings />
-          </Route>
-          <Route path="/profile">
-            <Profile />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
-  );
+				<Switch>
+					<Route path="/lockcontrols">
+						<LockControls />
+					</Route>
+					<Route path="/">
+						<Home listings={listings} addr={addr}/>
+					</Route>
+					<Route path="/listings">
+						<Listings />
+					</Route>
+					<Route path="/profile">
+						<Profile />
+					</Route>
+				</Switch>
+			</div>
+		</Router>
+	);
 }
 
 function Home(props) {
@@ -80,7 +80,7 @@ function Home(props) {
 
 	return (
 		<>
-			<Navbar />
+			<Navbar addr={props.addr} />
 			<div className="container home-container">
 				<div className="columns">
 					<div className="column">
@@ -117,7 +117,7 @@ function LockControls() {
 	);
 }
 
-function Navbar() {
+function Navbar(props) {
 	return (
 		<nav
 			className="navbar is-light"
@@ -138,6 +138,9 @@ function Navbar() {
 				Search
 			</Link>
 			<div className="navbar-end">
+				<div className="navbar-item">
+					<p>{props.addr}</p>
+				</div>
 				<Link className="navbar-item" to="/profile">
 					<img src={profileImage} className="profile-img" />
 				</Link>
@@ -146,7 +149,7 @@ function Navbar() {
 	);
 }
 
-async function open3Box() {
+async function open3Box(addr) {
 	box = await Box.openBox(addr, fm.getProvider());
 	await box.syncDone;
 	console.log("Opened 3box box for ", addr);

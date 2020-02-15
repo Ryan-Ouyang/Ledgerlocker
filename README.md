@@ -21,6 +21,7 @@ We are able to integrate the Staking Protocol fairly easily to manage user funds
 With the current DSR of **7.5%**, and an assumption that the current balance will be staked for just 1 month.
 
 $82,978 * 0.075 / 12 = **$518.61** that could be potentially earned by the ETHDenver team.
+
 That's 25.9 **B IS FOR BUFFICORN** Books!!
 
 ### Buyer / Seller Marketplace

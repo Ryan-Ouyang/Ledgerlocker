@@ -1,13 +1,12 @@
  pragma solidity ^0.5.0;
+import "./Lending.sol";
 import "./Reputation.sol";
 
-
 // An implementation of handling automated listings
-contract ListingManager is Reputation {
+contract ListingManager is Lending, Reputation {
 
     struct Listing {
         uint256 price; // Token balance
-        uint256 duration; // Duration in seconds
         uint256 timestamp; // timestamp until listing is available again
         address renter;
         address owner;
@@ -33,30 +32,36 @@ contract ListingManager is Reputation {
     // Creates a listing(uint256 _id)
     function createListing(
         uint256 _id,
-        uint256 _price,
-        uint256 _duration
+        uint256 _price // Price per day
     ) public {
-        listings[_id] = Listing(_price, _duration, 0, address(0), msg.sender);
+        listings[_id] = Listing(_price, 0, address(0), msg.sender);
     }
     
-    // Books a listing 
-    function bookListing(uint256 _id) public {
+    /** 
+     * Books a listing 
+     * @param _id       The id of the listing
+     * @param _duration The duration of the stay in seconds
+     */ 
+    function bookListing(uint256 _id, uint256 _duration) public {
         Listing storage listing = listings[_id];
         require(listing.timestamp < block.timestamp, "Cannot rent in a listing that is not open");
         require(listing.owner != address(0), "Ensure listing exists");
         require(listing.owner != msg.sender, "Listing owner cannot be user");
         
         // Modify Listing
-        listing.timestamp = getFutureTimestamp(listing.duration);
+        listing.timestamp = getFutureTimestamp(_duration);
         listing.renter = msg.sender;
         
         // Stores the timelocked balance in the owner account
-        _transfer(listing.owner, listing.price, listing.duration);
+        _transfer(listing.owner, listing.price, _duration);
         
         emit listingBooked(_id);
     }
     
-    // 
+    /**
+     * Ends the listing
+     * @param _id The id of the listing
+     */ 
     function endListing(uint256 _id) public {
         Listing storage listing = listings[_id];
         require(listing.renter == msg.sender, "Listing renter is incorrect");

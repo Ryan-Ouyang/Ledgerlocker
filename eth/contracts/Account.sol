@@ -59,6 +59,7 @@ contract Account is Timestamp {
         return totalBalance;
     }
     
+    // Gets the total user balance
     function getTotalUserBalance() external view returns (uint256) {
         return totalUserBalance;
     }

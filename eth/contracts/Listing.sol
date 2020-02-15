@@ -1,7 +1,9 @@
  pragma solidity ^0.5.0;
-import "./Lending.sol";
+import "./Reputation.sol";
 
-contract ListingManager is Lending {
+
+// An implementation of handling automated listings
+contract ListingManager is Reputation {
 
     struct Listing {
         uint256 price; // Token balance
@@ -54,6 +56,7 @@ contract ListingManager is Lending {
         emit listingBooked(_id);
     }
     
+    // 
     function endListing(uint256 _id) public {
         Listing storage listing = listings[_id];
         require(listing.renter == msg.sender, "Listing renter is incorrect");

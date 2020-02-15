@@ -1,7 +1,7 @@
 pragma solidity ^0.5.0;
 
 import "./Account.sol";
-import "./DSR.sol";
+import "./Services/DSR.sol";
 import "../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 
@@ -31,12 +31,12 @@ contract Lending is Account, DSR {
     }
     
     function _handleInterestToken(uint256 _balance) internal {
-        // Put the paid amount into compound here
-        // cToken.mint.value(msg.value)();
+        //DSR
         _join(_balance);
     }
     
     function _redeemUnderlying(uint256 _balance) internal {
+        //DSR
         _exit(_balance);
     }
 }

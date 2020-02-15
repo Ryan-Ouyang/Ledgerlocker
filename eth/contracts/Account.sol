@@ -59,6 +59,10 @@ contract Account is Timestamp {
         return totalBalance;
     }
     
+    function getTotalUserBalance() external view returns (uint256) {
+        return totalUserBalance;
+    }
+    
     // Withdraw returns the user's current balance that is not timelocked
     // Prepares the balance to be withdrawn
     function _withdraw() internal returns (uint256) {

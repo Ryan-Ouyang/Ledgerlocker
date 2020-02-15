@@ -5,8 +5,6 @@ import Web3 from "web3";
 import Box from "3box";
 
 import 'bulma/css/bulma.css'
-import 'react-bulma-components/basic/react-bulma-components.min.css';
-import { NavBar } from 'react-bulma-components/dist';
 
 const fm = new Fortmatic("pk_test_C0C9ADE8AD6C86A9");
 let web3 = new Web3(fm.getProvider());
@@ -82,6 +80,11 @@ export default function App() {
 function Home() {
   return (
     <div className="container">
+      <nav className="navbar" role="navigation" aria-label="main navigation">
+      <a className="navbar-item" href="https://bulma.io">
+      <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28"></img>
+    </a>
+      </nav>
       <button onClick={() => handleGetAccounts()}>
         Get Accounts + 3Box Testing
       </button>

@@ -19,8 +19,6 @@ contract Timestamp is Ownable {
     function getFutureTimestamp(uint256 _duration) public view returns (uint256) {
         return block.timestamp + _duration / secondsPerBlock; 
     }
-    
-    
 }
 
 // A protocol that keeps track of the balance of an account.

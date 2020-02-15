@@ -32,14 +32,13 @@ contract ListingManager is DAILending {
     function createListing(
         uint256 _id,
         uint256 _price,
-        uint256 _duration,
-        uint256 _timestamp
+        uint256 _duration
     ) public {
-        listings[_id] = Listing(_price, _duration, _timestamp, msg.sender, address(0));
+        listings[_id] = Listing(_price, _duration, 0, address(0), msg.sender);
     }
     
     // Books a listing 
-    function bookListing(uint256 _id) public payable {
+    function bookListing(uint256 _id) public {
         Listing storage listing = listings[_id];
         require(listing.timestamp < block.timestamp, "Cannot rent in a listing that is not open");
         require(listing.owner != address(0), "Ensure listing exists");

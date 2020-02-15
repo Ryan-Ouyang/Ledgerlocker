@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Ryan-Ouyang/ledgerlocker/issues"
   },
-  "homepage": "https://github.com/Ryan-Ouyang/ledgerlocker#readme"
+  "homepage": "https://github.com/Ryan-Ouyang/ledgerlocker#readme",
+  "dependencies": {
+    "socket.io": "^2.3.0"
+  }
 }

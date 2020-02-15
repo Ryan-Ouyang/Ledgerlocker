@@ -11,15 +11,333 @@ import profileImage from "./assets/johndoe.png";
 
 import MainListing from "./components/MainListing/MainListing";
 
-const fm = new Fortmatic("pk_test_C0C9ADE8AD6C86A9");
+const fm = new Fortmatic("pk_test_C0C9ADE8AD6C86A9", "kovan");
 let web3 = new Web3(fm.getProvider());
 
 // let addr = "";
 let box;
 
 export default function App() {
+	const contractABI = [
+		{
+			"constant": false,
+			"inputs": [
+				{
+					"name": "_id",
+					"type": "uint256"
+				}
+			],
+			"name": "bookListing",
+			"outputs": [],
+			"payable": false,
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"constant": false,
+			"inputs": [
+				{
+					"name": "_id",
+					"type": "uint256"
+				},
+				{
+					"name": "_price",
+					"type": "uint256"
+				},
+				{
+					"name": "_duration",
+					"type": "uint256"
+				}
+			],
+			"name": "createListing",
+			"outputs": [],
+			"payable": false,
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"constant": false,
+			"inputs": [
+				{
+					"name": "_id",
+					"type": "uint256"
+				}
+			],
+			"name": "endListing",
+			"outputs": [],
+			"payable": false,
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"constant": false,
+			"inputs": [],
+			"name": "renounceOwnership",
+			"outputs": [],
+			"payable": false,
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"constant": false,
+			"inputs": [
+				{
+					"name": "_seconds",
+					"type": "uint256"
+				}
+			],
+			"name": "setSecondsPerBlock",
+			"outputs": [],
+			"payable": false,
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"constant": false,
+			"inputs": [
+				{
+					"name": "newOwner",
+					"type": "address"
+				}
+			],
+			"name": "transferOwnership",
+			"outputs": [],
+			"payable": false,
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": false,
+					"name": "_id",
+					"type": "uint256"
+				}
+			],
+			"name": "listingBooked",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": false,
+					"name": "_id",
+					"type": "uint256"
+				}
+			],
+			"name": "listingClosed",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": true,
+					"name": "previousOwner",
+					"type": "address"
+				},
+				{
+					"indexed": true,
+					"name": "newOwner",
+					"type": "address"
+				}
+			],
+			"name": "OwnershipTransferred",
+			"type": "event"
+		},
+		{
+			"constant": true,
+			"inputs": [],
+			"name": "balance",
+			"outputs": [
+				{
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [],
+			"name": "daiJoin",
+			"outputs": [
+				{
+					"name": "",
+					"type": "address"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [],
+			"name": "daiToken",
+			"outputs": [
+				{
+					"name": "",
+					"type": "address"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [
+				{
+					"name": "_address",
+					"type": "address"
+				}
+			],
+			"name": "getAccountBalance",
+			"outputs": [
+				{
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [
+				{
+					"name": "_duration",
+					"type": "uint256"
+				}
+			],
+			"name": "getFutureTimestamp",
+			"outputs": [
+				{
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [
+				{
+					"name": "_id",
+					"type": "uint256"
+				}
+			],
+			"name": "getListing",
+			"outputs": [
+				{
+					"name": "_price",
+					"type": "uint256"
+				},
+				{
+					"name": "_timestamp",
+					"type": "uint256"
+				},
+				{
+					"name": "_renter",
+					"type": "address"
+				},
+				{
+					"name": "_owner",
+					"type": "address"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [
+				{
+					"name": "_address",
+					"type": "address"
+				}
+			],
+			"name": "getWithdrawableBalance",
+			"outputs": [
+				{
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [],
+			"name": "isOwner",
+			"outputs": [
+				{
+					"name": "",
+					"type": "bool"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [],
+			"name": "owner",
+			"outputs": [
+				{
+					"name": "",
+					"type": "address"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [],
+			"name": "pot",
+			"outputs": [
+				{
+					"name": "",
+					"type": "address"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"constant": true,
+			"inputs": [],
+			"name": "vat",
+			"outputs": [
+				{
+					"name": "",
+					"type": "address"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+		}
+	];
+
 	const [listings, setListings] = useState([]);
 	const [addr, setAddr] = useState("");
+	const [contract, setContract] = useState();
 
 	useEffect(() => {
 		const fetchListings = async () => {
@@ -40,8 +358,15 @@ export default function App() {
 			});
 		};
 
+		const instantiateContract = async () => {
+			const instance = new web3.eth.Contract(contractABI, '0xD0B9B721279E0F0c11c4c750f3530661097F016c');
+			setContract(instance);
+			console.log("Contract instantiated");
+		}
+
 		fetchListings();
 		loginUser();
+		instantiateContract();
 	}, []);
 
 	return (
@@ -54,7 +379,7 @@ export default function App() {
 						<LockControls />
 					</Route>
 					<Route path="/">
-						<Home listings={listings} addr={addr}/>
+						<Home listings={listings} addr={addr} contract={contract}/>
 					</Route>
 					<Route path="/listings">
 						<Listings />
@@ -85,12 +410,12 @@ function Home(props) {
 				<div className="columns">
 					<div className="column">
 						{leftColumnListings.map((l, i) => (
-							<MainListing key={i} listing={l}></MainListing>
+							<MainListing key={i} listing={l} contract={props.contract}></MainListing>
 						))}
 					</div>
 					<div className="column">
 						{rightColumnListings.map((l, i) => (
-							<MainListing key={i} listing={l}></MainListing>
+							<MainListing key={i} listing={l} contract={props.contract}></MainListing>
 						))}
 					</div>
 				</div>

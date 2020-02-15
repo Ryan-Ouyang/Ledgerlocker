@@ -1,5 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Fortmatic from "fortmatic";
+import Web3 from "web3";
+
+const fm = new Fortmatic("pk_test_C0C9ADE8AD6C86A9");
+let web3 = new Web3(fm.getProvider());
 
 const listings = [
   {
@@ -18,6 +23,10 @@ const listings = [
       "https://www.trbimg.com/img-577423d8/turbine/ct-elite-street-sixteen-candles-evanston-home-for-sale-0630-biz-20160629"
   }
 ];
+
+let handleGetAccounts = () => {
+  web3.eth.getAccounts().then(console.log);
+};
 
 export default function App() {
   return (
@@ -58,6 +67,7 @@ export default function App() {
 function Home() {
   return (
     <div className="container">
+      <button onClick={() => handleGetAccounts()}>web3.eth.getAccounts</button>
       {listings.map((l, i) => (
         <div key={i}>
           <h1>{l.name}</h1>;

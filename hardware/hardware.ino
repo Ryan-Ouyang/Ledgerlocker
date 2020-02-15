@@ -2,7 +2,10 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
-#include <SocketIOClient.h>
+
+
+#include <ESP8266WiFi.h>
+#include <SocketIoClient.h>
 
 #define ServoPin 14 //D5
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
@@ -14,10 +17,10 @@ const char* ssid = "BELLWIFI@MCDONALDS";
 const char* password = "bigChungus";
 
 /// Socket.IO Settings ///
-String host = "ad733518.ngrok.io";
+const char* host = "1ce65d67.ngrok.io";
 const int port = 3001;
 
-SocketIOClient socket;
+SocketIoClient socket;
 
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 Servo myservo;
@@ -30,6 +33,7 @@ void openLock(){
     display.setCursor(0, 10);
     display.println("Unlocked");
     display.display();
+    socket.emit("postLock", "\"unlocked\"");
 }
 
 void closeLock(){
@@ -38,14 +42,16 @@ void closeLock(){
     display.setCursor(0, 10);
     display.println("Locked");
     display.display();
+    socket.emit("postLock", "\"locked\"");
 }
 
-void setLock(String incoming){
-  if(incoming.equals("unlock")){
+void setLock(const char * payload, size_t length){
+  if(strcmp(payload, "unlock") == 0){
     openLock();
-  } else if (incoming.equals("lock")){
+  } else if (strcmp(payload, "lock") == 0){
     closeLock();
   }
+  delay(2000);
 }
 
 void setup() {
@@ -84,43 +90,25 @@ void setup() {
 
   // Set up socket
   socket.on("lockState", setLock);
-  if (!socket.connect(host)) Serial.println("Not connected.");
-  delay(100);
-  if (socket.connected())
-  {
-    Serial.println("Conection sucessful.");
-  }
-  else
-  {
-    Serial.println("Connection Error");
-    while (1);
-  }
+  socket.begin(host);
   
 }
 
 void loop() {
-  socket.monitor();
+  socket.loop();
+  doorClosed = analogRead(DoorPin) > 800;
 
-  if (Serial.available() > 0) {
-    // read the incoming byte:
-    char command = Serial.read();
-    if(command == 'o'){
-      openLock();
-    } else if (command == 'c'){
+  if(doorClosed != lastDoorClosed){
+    if(doorClosed){ // Door just closed
+      socket.emit("postDoor", "\"closed\"");
+      delay(2000);
       closeLock();
+    } else {
+      socket.emit("postDoor", "\"open\"");
     }
-    delay(2000);
-  } else {
-    doorClosed = analogRead(DoorPin) > 800;
-  
-    if(doorClosed != lastDoorClosed){
-      if(doorClosed){ // Door just closed
-        delay(2000);
-        closeLock();
-      }
-      lastDoorClosed = doorClosed;
-    }
+    lastDoorClosed = doorClosed;
   }
+
   
   delay(100);
 }

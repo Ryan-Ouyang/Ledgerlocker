@@ -19,7 +19,7 @@ app.post('/api/lock/', function(req, res) {
     io.sockets.emit('lock', req);
 })
 
-app.post('api/changeID', function(req, res) {
+app.post('/api/changeID', function(req, res) {
     io.sockets.emit('change', req);
 })
 

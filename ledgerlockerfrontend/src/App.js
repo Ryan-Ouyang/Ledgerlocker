@@ -12,19 +12,42 @@ import MainListing from "./components/MainListing";
 
 const listings = [
   {
-    name: "House 1",
+    name: "Walk 12 minutes to bus 194 & 196 in Forest Park, GA",
+    key: 1,
+    address: "Forest Park, GA",
+    rent: "50 DAI/day",
+    stake: 2,
+    description:
+      "123 Broadway, Denver near ABC Mall. Walking score 95, with everything you can want within 5 minutes walking distance. House was just renovated and has hardwood floors, new kitchen appliances, and renovated bathrooms. A great place to call it your home!",
 
-    address: "123 Broadway, Denver, CO",
-    rent: "50 DAI",
-    img:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Isaac_Bell_House_2018-06-13.jpg/1200px-Isaac_Bell_House_2018-06-13.jpg"
+    images: [
+      "https://www.padsplit.com/img/rooms/room_866_0_1578610474.769763.jpg",
+      "https://www.padsplit.com/img/rooms/room_866_1_1578610474.769763.jpg",
+      "https://www.padsplit.com/img/psproperty/psproperty_158_4_1578610474.769763.jpg",
+      "https://www.padsplit.com/img/psproperty/psproperty_158_3_1578610474.769763.jpg",
+      "https://www.padsplit.com/img/psproperty/psproperty_158_2_1578610474.769763.jpg",
+      "https://www.padsplit.com/img/psproperty/psproperty_158_1_1578610474.769763.jpg",
+      "https://www.padsplit.com/img/psproperty/psproperty_158_0_1578610474.769763.jpg"
+    ]
   },
   {
-    name: "House 2",
-    address: "253 11th St, Denver, CO",
-    rent: "100 DAI",
-    img:
-      "https://www.trbimg.com/img-577423d8/turbine/ct-elite-street-sixteen-candles-evanston-home-for-sale-0630-biz-20160629"
+    name: "Walk 12 minutes to bus 194 & 196 in Forest Park, GA",
+    key: 2,
+    address: "Forest Park, GA",
+    rent: "50 DAI/day",
+    stake: 2,
+    description:
+      "123 Broadway, Denver near ABC Mall. Walking score 95, with everything you can want within 5 minutes walking distance. House was just renovated and has hardwood floors, new kitchen appliances, and renovated bathrooms. A great place to call it your home!",
+
+    images: [
+      "https://www.padsplit.com/img/rooms/room_866_0_1578610474.769763.jpg",
+      "https://www.padsplit.com/img/rooms/room_866_1_1578610474.769763.jpg",
+      "https://www.padsplit.com/img/psproperty/psproperty_158_4_1578610474.769763.jpg",
+      "https://www.padsplit.com/img/psproperty/psproperty_158_3_1578610474.769763.jpg",
+      "https://www.padsplit.com/img/psproperty/psproperty_158_2_1578610474.769763.jpg",
+      "https://www.padsplit.com/img/psproperty/psproperty_158_1_1578610474.769763.jpg",
+      "https://www.padsplit.com/img/psproperty/psproperty_158_0_1578610474.769763.jpg"
+    ]
   }
 ];
 
@@ -52,9 +75,6 @@ export default function App() {
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Switch>
-          <Route path="/listingdetails">
-            <ListingDetails />
-          </Route>
           <Route path="/lockcontrols">
             <LockControls />
           </Route>
@@ -111,15 +131,6 @@ function Listings() {
 
 function Profile() {
   return <p>testing 2</p>;
-}
-
-function ListingDetails() {
-  // Includes listing confirmation modal
-  return (
-    <section>
-      <h1>LISTING DETAILS</h1>
-    </section>
-  );
 }
 
 function LockControls() {

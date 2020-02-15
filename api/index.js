@@ -41,7 +41,7 @@ app.post("/api/lock/", function (req, res) {
 });
 
 app.post("/api/changeID", function (req, res) {
-  io.sockets.emit("idState", req);
+  io.sockets.emit("idState", req.body.id);
   res.send(200);
 });
 

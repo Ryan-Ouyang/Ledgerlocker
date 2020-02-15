@@ -17,7 +17,7 @@ const char* ssid = "BELLWIFI@MCDONALDS";
 const char* password = "bigChungus";
 
 /// Socket.IO Settings ///
-const char* host = "1ce65d67.ngrok.io";
+const char* host = "1c7b7c59.ngrok.io";
 const int port = 3001;
 
 SocketIoClient socket;
@@ -52,6 +52,15 @@ void setLock(const char * payload, size_t length){
     closeLock();
   }
   delay(2000);
+}
+
+void setId(const char * payload, size_t length){
+  display.clearDisplay();
+  display.setCursor(0, 10);
+  display.println("Your code");
+  display.println(payload);
+  display.display();
+  Serial.println("Updated lock code");
 }
 
 void setup() {
@@ -90,6 +99,7 @@ void setup() {
 
   // Set up socket
   socket.on("lockState", setLock);
+  socket.on("idState", setId);
   socket.begin(host);
   
 }

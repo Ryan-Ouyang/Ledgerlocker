@@ -47,26 +47,23 @@ export default function App() {
 			<div>
 				{/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
-				<Switch>
-					<Route path="/listingdetails">
-						<ListingDetails />
-					</Route>
-					<Route path="/lockcontrols">
-						<LockControls />
-					</Route>
-					<Route path="/">
-						<Home listings={listings}/>
-					</Route>
-					<Route path="/listings">
-						<Listings />
-					</Route>
-					<Route path="/profile">
-						<Profile />
-					</Route>
-				</Switch>
-			</div>
-		</Router>
-	);
+        <Switch>
+          <Route path="/lockcontrols">
+            <LockControls />
+          </Route>
+          <Route path="/">
+            <Home listings={listings}/>
+          </Route>
+          <Route path="/listings">
+            <Listings />
+          </Route>
+          <Route path="/profile">
+            <Profile />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
+  );
 }
 
 function Home(props) {
@@ -109,15 +106,6 @@ function Listings() {
 
 function Profile() {
 	return <p>testing 2</p>;
-}
-
-function ListingDetails() {
-	// Includes listing confirmation modal
-	return (
-		<section>
-			<h1>LISTING DETAILS</h1>
-		</section>
-	);
 }
 
 function LockControls() {

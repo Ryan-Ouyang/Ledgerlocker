@@ -170,6 +170,21 @@ export class Contract extends SmartContract {
     return CallResult.fromValue(value[0].toBigInt());
   }
 
+  getAdminAccountBalance(): BigInt {
+    let result = super.call("getAdminAccountBalance", []);
+
+    return result[0].toBigInt();
+  }
+
+  try_getAdminAccountBalance(): CallResult<BigInt> {
+    let result = super.tryCall("getAdminAccountBalance", []);
+    if (result.reverted) {
+      return new CallResult();
+    }
+    let value = result.value;
+    return CallResult.fromValue(value[0].toBigInt());
+  }
+
   getFutureTimestamp(_duration: BigInt): BigInt {
     let result = super.call("getFutureTimestamp", [
       EthereumValue.fromUnsignedBigInt(_duration)
@@ -218,6 +233,21 @@ export class Contract extends SmartContract {
         value[3].toAddress()
       )
     );
+  }
+
+  getTotalUserBalance(): BigInt {
+    let result = super.call("getTotalUserBalance", []);
+
+    return result[0].toBigInt();
+  }
+
+  try_getTotalUserBalance(): CallResult<BigInt> {
+    let result = super.tryCall("getTotalUserBalance", []);
+    if (result.reverted) {
+      return new CallResult();
+    }
+    let value = result.value;
+    return CallResult.fromValue(value[0].toBigInt());
   }
 
   getWithdrawableBalance(_address: Address): BigInt {
@@ -320,6 +350,10 @@ export class BookListingCall__Inputs {
   get _id(): BigInt {
     return this._call.inputValues[0].value.toBigInt();
   }
+
+  get _duration(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
 }
 
 export class BookListingCall__Outputs {
@@ -354,16 +388,38 @@ export class CreateListingCall__Inputs {
   get _price(): BigInt {
     return this._call.inputValues[1].value.toBigInt();
   }
-
-  get _duration(): BigInt {
-    return this._call.inputValues[2].value.toBigInt();
-  }
 }
 
 export class CreateListingCall__Outputs {
   _call: CreateListingCall;
 
   constructor(call: CreateListingCall) {
+    this._call = call;
+  }
+}
+
+export class CreateVoteCall extends EthereumCall {
+  get inputs(): CreateVoteCall__Inputs {
+    return new CreateVoteCall__Inputs(this);
+  }
+
+  get outputs(): CreateVoteCall__Outputs {
+    return new CreateVoteCall__Outputs(this);
+  }
+}
+
+export class CreateVoteCall__Inputs {
+  _call: CreateVoteCall;
+
+  constructor(call: CreateVoteCall) {
+    this._call = call;
+  }
+}
+
+export class CreateVoteCall__Outputs {
+  _call: CreateVoteCall;
+
+  constructor(call: CreateVoteCall) {
     this._call = call;
   }
 }

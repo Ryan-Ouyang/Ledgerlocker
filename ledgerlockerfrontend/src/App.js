@@ -17,17 +17,6 @@ let web3 = new Web3(fm.getProvider());
 let addr = "";
 let box;
 
-async function handleGetAccounts() {
-	web3.eth.getAccounts().then(async address => {
-		addr = address[0];
-		console.log("Address: ", addr);
-		await open3Box();
-		await set3BoxData("testing", "value");
-		await get3BoxData("testing");
-		await remove3BoxData("testing");
-	});
-}
-
 export default function App() {
   const [listings, setListings] = useState([]);
   
@@ -37,9 +26,22 @@ export default function App() {
         'http://localhost:3001/api/listings',
       );
       setListings(result.data);
+      console.log("Fetched listings")
     };
+
+    const loginUser = async () => {
+      web3.eth.getAccounts().then(async address => {
+        addr = address[0];
+        console.log("Address: ", addr);
+        await open3Box();
+        await set3BoxData("testing", "value");
+        await get3BoxData("testing");
+        await remove3BoxData("testing");
+      });
+    }
+
     fetchListings();
-    console.log("Fetched listings")
+    loginUser();
   }, []);
 
 	return (
@@ -79,10 +81,7 @@ function Home(props) {
 	return (
 		<>
 			<Navbar />
-			<div className="container">
-				<button onClick={() => handleGetAccounts()}>
-					Get Accounts + 3Box Testing
-				</button>
+			<div className="container home-container">
 				<div className="columns">
 					<div className="column">
 						{leftColumnListings.map((l, i) => (

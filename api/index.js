@@ -27,10 +27,10 @@ app.post("/api/changeID", function(req, res) {
 app.get("/api/listings", function(req, res) {
   const listings = [
     {
-      name: "Walk 12 minutes to bus 194 & 196 in Forest Park, GA",
+      name: "Lovely Micro-Studio in Forest Park, GA",
       key: 1,
       address: "Forest Park, GA",
-      rent: "50 DAI/day",
+      rent: "45 DAI/day",
       stake: 2,
       description:
         "123 Broadway, Denver near ABC Mall. Walking score 95, with everything you can want within 5 minutes walking distance. House was just renovated and has hardwood floors, new kitchen appliances, and renovated bathrooms. A great place to call it your home!",
@@ -46,9 +46,9 @@ app.get("/api/listings", function(req, res) {
       ]
     },
     {
-      name: "Walk 12 minutes to bus 194 & 196 in Forest Park, GA",
+      name: "Cosy Apartment in Denver, CO",
       key: 2,
-      address: "Forest Park, GA",
+      address: "Denver, CO",
       rent: "50 DAI/day",
       stake: 2,
       description:

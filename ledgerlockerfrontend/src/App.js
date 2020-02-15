@@ -4,7 +4,9 @@ import Fortmatic from "fortmatic";
 import Web3 from "web3";
 import Box from "3box";
 
-import 'bulma/css/bulma.css'
+import "bulma/css/bulma.css";
+import "./App.css";
+import profileImage from "./assets/johndoe.png";
 
 const fm = new Fortmatic("pk_test_C0C9ADE8AD6C86A9");
 let web3 = new Web3(fm.getProvider());
@@ -45,20 +47,6 @@ export default function App() {
   return (
     <Router>
       <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/listingdetails">About</Link>
-            </li>
-            <li>
-              <Link to="/lockcontrols">Users</Link>
-            </li>
-          </ul>
-        </nav>
-
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Switch>
@@ -71,6 +59,12 @@ export default function App() {
           <Route path="/">
             <Home />
           </Route>
+          <Route path="/listings">
+            <Listings />
+          </Route>
+          <Route path="/profile">
+            <Profile />
+          </Route>
         </Switch>
       </div>
     </Router>
@@ -79,11 +73,30 @@ export default function App() {
 
 function Home() {
   return (
-    <div className="container">
-      <nav className="navbar" role="navigation" aria-label="main navigation">
-      <a className="navbar-item" href="https://bulma.io">
-      <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28"></img>
-    </a>
+    <div>
+      <nav
+        className="navbar is-light"
+        role="navigation"
+        aria-label="main navigation"
+      >
+        <a className="navbar-item" href="https://bulma.io">
+          <img
+            src="https://bulma.io/images/bulma-logo.png"
+            width="112"
+            height="28"
+          ></img>
+        </a>
+        <Link className="navbar-item" to="/">
+          Home
+        </Link>
+        <Link className="navbar-item" to="/search">
+          Search
+        </Link>
+        <div class="navbar-end">
+          <Link className="navbar-item" to="/profile">
+            <img src={profileImage} className="profile-img" />
+          </Link>
+        </div>
       </nav>
       <button onClick={() => handleGetAccounts()}>
         Get Accounts + 3Box Testing
@@ -102,22 +115,31 @@ function Home() {
   );
 }
 
-function ListingDetails() { // Includes listing confirmation modal
+function Listings() {
+  return <p>testing</p>;
+}
+
+function Profile() {
+  return <p>testing 2</p>;
+}
+
+function ListingDetails() {
+  // Includes listing confirmation modal
   return (
     <section>
       <h1>LISTING DETAILS</h1>
     </section>
-  )
+  );
 }
 
 function LockControls() {
-  return(
+  return (
     <section>
       <h1>LOCK CONTROLS:</h1>
       <button>Unlock</button>
       <button>Lock</button>
     </section>
-  )
+  );
 }
 
 async function open3Box() {

@@ -8,6 +8,26 @@ import "bulma/css/bulma.css";
 import "./App.css";
 import profileImage from "./assets/johndoe.png";
 
+import MainListing from "./components/MainListing";
+
+const listings = [
+  {
+    name: "House 1",
+
+    address: "123 Broadway, Denver, CO",
+    rent: "50 DAI",
+    img:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Isaac_Bell_House_2018-06-13.jpg/1200px-Isaac_Bell_House_2018-06-13.jpg"
+  },
+  {
+    name: "House 2",
+    address: "253 11th St, Denver, CO",
+    rent: "100 DAI",
+    img:
+      "https://www.trbimg.com/img-577423d8/turbine/ct-elite-street-sixteen-candles-evanston-home-for-sale-0630-biz-20160629"
+  }
+];
+
 const fm = new Fortmatic("pk_test_C0C9ADE8AD6C86A9");
 let web3 = new Web3(fm.getProvider());
 
@@ -57,6 +77,7 @@ function Home() {
   const leftColumnListings = [];
   const rightColumnListings = [];
 
+  // For flowing two columns
   for (let i = 0; i < listings.length; i += 2) {
     leftColumnListings.push(listings[i]);
     rightColumnListings.push(listings[i + 1]);
@@ -71,26 +92,12 @@ function Home() {
       <div className="columns">
         <div className="column">
           {leftColumnListings.map((l, i) => (
-            <div key={i}>
-              <h1>{l.name}</h1>;
-              <p>
-                Address: <b>{l.address}</b>
-                Rent: <b>{l.rent}</b>
-                <img src={l.img}></img>
-              </p>
-            </div>
+            <MainListing key={i} listing={l}></MainListing>
           ))}
         </div>
         <div className="column">
           {rightColumnListings.map((l, i) => (
-            <div key={i}>
-              <h1>{l.name}</h1>;
-              <p>
-                Address: <b>{l.address}</b>
-                Rent: <b>{l.rent}</b>
-                <img src={l.img}></img>
-              </p>
-            </div>
+            <MainListing key={i} listing={l}></MainListing>
           ))}
         </div>
       </div>

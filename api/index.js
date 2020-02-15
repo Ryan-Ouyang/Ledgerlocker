@@ -8,23 +8,29 @@ var io = require("socket.io")(server);
 app.use(cors());
 app.use(express.json());
 
-io.on("connection", function(socket) {
-  console.log("LOCK CONNECTED");
+io.on("connection", function (socket) {
+  console.log("Lock connected");
+  socket.on('disconnect', function () {
+    console.log('Lock disconnected');
+  });
 });
 
-app.post("/api/unlock/", function(req, res) {
-  io.sockets.emit("open sesame", req);
+app.post("/api/unlock/", function (req, res) {
+  io.sockets.emit("lockState", "unlock");
+  res.send(200);
 });
 
-app.post("/api/lock/", function(req, res) {
-  io.sockets.emit("lock", req);
+app.post("/api/lock/", function (req, res) {
+  io.sockets.emit("lockState", "lock");
+  res.send(200);
 });
 
-app.post("/api/changeID", function(req, res) {
-  io.sockets.emit("change", req);
+app.post("/api/changeID", function (req, res) {
+  io.sockets.emit("idState", req);
+  res.send(200);
 });
 
-app.get("/api/listings", function(req, res) {
+app.get("/api/listings", function (req, res) {
   const listings = [
     {
       name: "House 1",

@@ -2,9 +2,13 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Fortmatic from "fortmatic";
 import Web3 from "web3";
+import Box from "3box";
 
 const fm = new Fortmatic("pk_test_C0C9ADE8AD6C86A9");
 let web3 = new Web3(fm.getProvider());
+
+let addr = "";
+let box;
 
 const listings = [
   {
@@ -24,9 +28,16 @@ const listings = [
   }
 ];
 
-let handleGetAccounts = () => {
-  web3.eth.getAccounts().then(console.log);
-};
+async function handleGetAccounts() {
+  web3.eth.getAccounts().then(async address => {
+    addr = address[0];
+    console.log("Address: ", addr);
+    await open3Box();
+    await set3BoxData("testing", "value");
+    await get3BoxData("testing");
+    await remove3BoxData("testing");
+  });
+}
 
 export default function App() {
   return (
@@ -67,7 +78,9 @@ export default function App() {
 function Home() {
   return (
     <div className="container">
-      <button onClick={() => handleGetAccounts()}>web3.eth.getAccounts</button>
+      <button onClick={() => handleGetAccounts()}>
+        Get Accounts + 3Box Testing
+      </button>
       {listings.map((l, i) => (
         <div key={i}>
           <h1>{l.name}</h1>;
@@ -88,4 +101,25 @@ function About() {
 
 function Users() {
   return <h2>Users</h2>;
+}
+
+async function open3Box() {
+  box = await Box.openBox(addr, fm.getProvider());
+  await box.syncDone;
+  console.log("Opened 3box box for ", addr);
+}
+
+async function set3BoxData(key, value) {
+  await box.private.set(key, value);
+  console.log("Set private value in 3box (key: ", key, ")");
+}
+
+async function get3BoxData(key) {
+  await box.private.get(key);
+  console.log("Got private value in 3box (key: ", key, ")");
+}
+
+async function remove3BoxData(key) {
+  await box.private.remove(key);
+  console.log("Removed private value in 3box (key: ", key, ")");
 }

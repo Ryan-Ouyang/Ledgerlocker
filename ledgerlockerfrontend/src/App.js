@@ -54,22 +54,46 @@ export default function App() {
 }
 
 function Home() {
+  const leftColumnListings = [];
+  const rightColumnListings = [];
+
+  for (let i = 0; i < listings.length; i += 2) {
+    leftColumnListings.push(listings[i]);
+    rightColumnListings.push(listings[i + 1]);
+  }
+
   return (
     <div>
       <Navbar />
       <button onClick={() => handleGetAccounts()}>
         Get Accounts + 3Box Testing
       </button>
-      {listings.map((l, i) => (
-        <div key={i}>
-          <h1>{l.name}</h1>;
-          <p>
-            Address: <b>{l.address}</b>
-            Rent: <b>{l.rent}</b>
-            <img src={l.img}></img>
-          </p>
+      <div className="columns">
+        <div className="column">
+          {leftColumnListings.map((l, i) => (
+            <div key={i}>
+              <h1>{l.name}</h1>;
+              <p>
+                Address: <b>{l.address}</b>
+                Rent: <b>{l.rent}</b>
+                <img src={l.img}></img>
+              </p>
+            </div>
+          ))}
         </div>
-      ))}
+        <div className="column">
+          {rightColumnListings.map((l, i) => (
+            <div key={i}>
+              <h1>{l.name}</h1>;
+              <p>
+                Address: <b>{l.address}</b>
+                Rent: <b>{l.rent}</b>
+                <img src={l.img}></img>
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

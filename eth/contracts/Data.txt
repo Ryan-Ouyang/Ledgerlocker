@@ -1,14 +1,17 @@
 KOVAN
-contract address: 0xD0B9B721279E0F0c11c4c750f3530661097F016c
+contract address: 0xb3f0B6082eEc590F43056C1876b0413cf46a546A
 
 ABI: 
-
 [
 	{
 		"constant": false,
 		"inputs": [
 			{
 				"name": "_id",
+				"type": "uint256"
+			},
+			{
+				"name": "_duration",
 				"type": "uint256"
 			}
 		],
@@ -28,13 +31,18 @@ ABI:
 			{
 				"name": "_price",
 				"type": "uint256"
-			},
-			{
-				"name": "_duration",
-				"type": "uint256"
 			}
 		],
 		"name": "createListing",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [],
+		"name": "createVote",
 		"outputs": [],
 		"payable": false,
 		"stateMutability": "nonpayable",
@@ -195,6 +203,20 @@ ABI:
 	},
 	{
 		"constant": true,
+		"inputs": [],
+		"name": "getAdminAccountBalance",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
 		"inputs": [
 			{
 				"name": "_duration",
@@ -237,6 +259,20 @@ ABI:
 			{
 				"name": "_owner",
 				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getTotalUserBalance",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
 			}
 		],
 		"payable": false,

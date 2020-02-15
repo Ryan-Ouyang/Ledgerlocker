@@ -50,7 +50,6 @@ contract DSR {
     }
 
     constructor() public {
-
         vat.hope(address(0x5AA71a3ae1C0bd6ac27A1f28e1415fFFB6F15B8c));
         vat.hope(address(0xEA190DBDC7adF265260ec4dA6e9675Fd4f5A78bb));
 

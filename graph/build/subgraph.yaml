@@ -1,0 +1,29 @@
+specVersion: 0.0.2
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Contract
+    network: kovan
+    source:
+      address: "0xb3f0B6082eEc590F43056C1876b0413cf46a546A"
+      abi: Contract
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      entities:
+        - listingBooked
+        - listingClosed
+        - OwnershipTransferred
+      abis:
+        - name: Contract
+          file: Contract\abis\Contract.json
+      eventHandlers:
+        - event: listingBooked(uint256)
+          handler: handlelistingBooked
+        - event: listingClosed(uint256)
+          handler: handlelistingClosed
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+      file: Contract\Contract.wasm

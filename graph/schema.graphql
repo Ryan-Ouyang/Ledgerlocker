@@ -1,0 +1,4 @@
+type Listing @entity {
+  id: ID!
+  _id: BigInt!
+}

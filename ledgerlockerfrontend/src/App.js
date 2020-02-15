@@ -4,6 +4,8 @@ import Fortmatic from "fortmatic";
 import Web3 from "web3";
 import Box from "3box";
 
+import 'bulma/css/bulma.css'
+
 const fm = new Fortmatic("pk_test_C0C9ADE8AD6C86A9");
 let web3 = new Web3(fm.getProvider());
 

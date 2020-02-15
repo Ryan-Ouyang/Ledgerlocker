@@ -25,6 +25,8 @@ contract Timestamp is Ownable {
 // The account balance can be timelocked for the contract owner to earn interest for the duration
 contract Account is Timestamp {
     
+    uint256 totalUserBalance; // The total balance that is locked up by the users
+    
     struct LockedBalance {
         uint256 balance; // The underlying balance
         uint256 timestamp; // The block number of when this balance will be available to be withdrawn
@@ -73,6 +75,8 @@ contract Account is Timestamp {
         }
         
         require(totalBalance > 0,"No balance to withdraw");
+        totalUserBalance -= totalBalance;
+        
         return totalBalance;
     }
     
@@ -85,5 +89,6 @@ contract Account is Timestamp {
     function _transfer(address _to, uint256 _value, uint256 _duration) internal {
         uint256 timestamp = getFutureTimestamp(_duration);        
         accountBalance[_to].push(LockedBalance(_value, timestamp));
+        totalUserBalance += _value;
     }
 }

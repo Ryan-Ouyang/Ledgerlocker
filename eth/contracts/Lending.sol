@@ -1,12 +1,15 @@
 pragma solidity ^0.5.0;
 
 import "./Account.sol";
+import "./DSR.sol";
 import "../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
+
 // This contract manages interactions to current lending protocols
-contract DAILending is Account {
+contract Lending is Account, DSR {
     
-    IERC20 daiContract = IERC20(address(0xd6801a1DfFCd0a410336Ef88DeF4320D6DF1883e));
+    // DAI ERC20 Smart Contract 
+    IERC20 daiContract = IERC20(address(0x4F96Fe3b7A6Cf9725f59d353F723c1bDb64CA6Aa));
 
     function withdraw() internal returns (uint256) {
         uint256 totalBalance = _withdraw();
@@ -30,9 +33,10 @@ contract DAILending is Account {
     function _handleInterestToken(uint256 _balance) internal {
         // Put the paid amount into compound here
         // cToken.mint.value(msg.value)();
+        _join(_balance);
     }
     
     function _redeemUnderlying(uint256 _balance) internal {
-        // require(cToken.redeemUnderlying(_balance) == 0, "something went wrong");
+        _exit(_balance);
     }
 }

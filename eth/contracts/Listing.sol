@@ -1,7 +1,7 @@
  pragma solidity ^0.5.0;
-import "./DAILending.sol";
+import "./Lending.sol";
 
-contract ListingManager is DAILending {
+contract ListingManager is Lending {
 
     struct Listing {
         uint256 price; // Token balance

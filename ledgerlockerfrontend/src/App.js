@@ -1,6 +1,16 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
+import Fortmatic from 'fortmatic';
+import Web3 from 'web3';
+
+const fm = new Fortmatic('pk_test_C0C9ADE8AD6C86A9');
+let web3 = new Web3(fm.getProvider());
+
+let handleGetAccounts = () => {
+  web3.eth.getAccounts().then(console.log);
+}
+
 export default function App() {
 	return (
 		<Router>
@@ -38,7 +48,9 @@ export default function App() {
 }
 
 function Home() {
-	return <h2>Home</h2>;
+	return (
+    <button onClick={() => handleGetAccounts()}>web3.eth.getAccounts</button>
+  );
 }
 
 function About() {

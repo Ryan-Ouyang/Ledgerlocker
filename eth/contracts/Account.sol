@@ -19,10 +19,13 @@ contract Timestamp is Ownable {
     function getFutureTimestamp(uint256 _duration) public view returns (uint256) {
         return block.timestamp + _duration / secondsPerBlock; 
     }
+    
+    
 }
 
-// A protocol that 
-contract Staking is Timestamp {
+// A protocol that keeps track of the balance of an account.
+// The account balance can be timelocked for the contract owner to earn interest for the duration
+contract Account is Timestamp {
     
     struct LockedBalance {
         uint256 balance; // The underlying balance
@@ -58,10 +61,10 @@ contract Staking is Timestamp {
     
     // Withdraw returns the user's current balance that is not timelocked
     // Prepares the balance to be withdrawn
-    function withdraw() public returns (uint256) {
+    function _withdraw() internal returns (uint256) {
         uint256 totalBalance;
         
-        LockedBalance[] memory wrappedBalance = accountBalance[msg.sender];
+        LockedBalance[] storage wrappedBalance = accountBalance[msg.sender];
         for (uint i = 0; i < wrappedBalance.length; i++) {
             if (block.timestamp > wrappedBalance[i].timestamp) {
                 totalBalance += wrappedBalance[i].balance;
@@ -78,11 +81,11 @@ contract Staking is Timestamp {
     /** 
      * Transfer a balance to an address
      * @param _to       The address of the recipient
-     * @oaram _value    The amount of token to send
+     * @param _value    The amount of token to send
      * @param _duration The amount of time in seconds till the DAI can be unlocked
      */
     function _transfer(address _to, uint256 _value, uint256 _duration) internal {
         uint256 timestamp = getFutureTimestamp(_duration);        
-        accountBalance[_to].push(LockedBalance(msg.value, timestamp));
+        accountBalance[_to].push(LockedBalance(_value, timestamp));
     }
 }

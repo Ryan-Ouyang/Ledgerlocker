@@ -38,10 +38,10 @@ export default function App() {
               <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="/about">About</Link>
+              <Link to="/listingdetails">About</Link>
             </li>
             <li>
-              <Link to="/users">Users</Link>
+              <Link to="/lockcontrols">Users</Link>
             </li>
           </ul>
         </nav>
@@ -49,11 +49,11 @@ export default function App() {
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Switch>
-          <Route path="/about">
-            <About />
+          <Route path="/listingdetails">
+            <ListingDetails />
           </Route>
-          <Route path="/users">
-            <Users />
+          <Route path="/lockcontrols">
+            <LockControls />
           </Route>
           <Route path="/">
             <Home />
@@ -82,10 +82,20 @@ function Home() {
   );
 }
 
-function About() {
-  return <h2>About</h2>;
+function ListingDetails() { // Includes listing confirmation modal
+  return (
+    <section>
+      <h1>LISTING DETAILS</h1>
+    </section>
+  )
 }
 
-function Users() {
-  return <h2>Users</h2>;
+function LockControls() {
+  return(
+    <section>
+      <h1>LOCK CONTROLS:</h1>
+      <button>Unlock</button>
+      <button>Lock</button>
+    </section>
+  )
 }

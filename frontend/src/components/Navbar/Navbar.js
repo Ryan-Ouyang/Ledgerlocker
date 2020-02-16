@@ -1,6 +1,7 @@
 import React from "react";
 import "bulma/css/bulma.css";
 import profileImage from "../../assets/johndoe.png";
+import Icon from "../../assets/Header.png";
 import { Link } from "react-router-dom";
 export default function Navbar(props) {
   return (
@@ -9,9 +10,9 @@ export default function Navbar(props) {
       role="navigation"
       aria-label="main navigation"
     >
-      <a className="navbar-item" href="https://bulma.io">
+      <a className="navbar-item" href="/">
         <img
-          src="https://bulma.io/images/bulma-logo.png"
+          src={Icon}
           width="112"
           height="28"
         ></img>

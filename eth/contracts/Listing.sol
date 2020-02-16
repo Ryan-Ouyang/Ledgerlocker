@@ -54,7 +54,7 @@ contract ListingManager is Lending, Reputation {
         return _listingPrice * (_duration / 86400);
     }
     
-    //---Implementation
+    //---Implementation---
 
     // Creates a listing(uint256 _id)
     function createListing(
@@ -98,7 +98,6 @@ contract ListingManager is Lending, Reputation {
      * Ends the listing
      * @param _id The id of the listing
      */
-
     function endListing(uint256 _id) public {
         Listing storage listing = listings[_id];
         require(listing.renter == msg.sender, "Listing renter is incorrect");

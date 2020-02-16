@@ -10,6 +10,7 @@ import "./App.css";
 import profileImage from "./assets/johndoe.png";
 
 import MainListing from "./components/MainListing/MainListing";
+import Bookings from "./components/Bookings/Bookings";
 
 const fm = new Fortmatic("pk_test_C0C9ADE8AD6C86A9");
 let web3 = new Web3(fm.getProvider());
@@ -47,17 +48,21 @@ export default function App() {
 	return (
 		<Router>
 			<div>
+				<Navbar addr={addr} />
 				{/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
 				<Switch>
 					<Route path="/lockcontrols">
 						<LockControls />
 					</Route>
-					<Route path="/">
-						<Home listings={listings} addr={addr}/>
+					<Route exact path="/">
+						<Home listings={listings} addr={addr} />
 					</Route>
 					<Route path="/listings">
 						<Listings />
+					</Route>
+					<Route path="/bookings">
+						<Bookings />
 					</Route>
 					<Route path="/profile">
 						<Profile />
@@ -80,7 +85,7 @@ function Home(props) {
 
 	return (
 		<>
-			<Navbar addr={props.addr} />
+
 			<div className="container home-container">
 				<div className="columns">
 					<div className="column">
@@ -136,6 +141,9 @@ function Navbar(props) {
 			</Link>
 			<Link className="navbar-item" to="/search">
 				Search
+			</Link>
+			<Link className="navbar-item" to="/bookings">
+				Bookings
 			</Link>
 			<div className="navbar-end">
 				<div className="navbar-item">

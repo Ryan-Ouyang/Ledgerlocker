@@ -1,50 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Web3 from "web3";
 
 import ParticlesBg from 'particles-bg';
-
 import "./Dashboard.css";
 
+import contractABI from "../../abis/contract";
+
 export default function Dashboard() {
-    const createListing = (id, price) => {
-        var contract = new web3js.eth.Contract(contractABI, contractAddress);
+    const [balance, setBalance] = useState(0);
+    const [adminBalance, setAdminBalance] = useState(0);
+    const web3 = new Web3("https://kovan.infura.io/v3/b08e31ca292b465d8ddb30d57921c756");
+    const contractAddr = "0x158e2c19E19F7C79D5097166a90009f9f73dc301";
 
-        // FROM https://medium.com/coinmonks/ethereum-tutorial-sending-transaction-via-nodejs-backend-7b623b885707
-        var count;
-        // get transaction count, later will used as nonce
-        web3js.eth.getTransactionCount(address).then(function (v) {
-            console.log("Count: " + v);
-            count = v;
-            //creating raw tranaction
-            var rawTransaction = {
-                from: address,
-                gasPrice: web3js.utils.toHex(60 * 10e9),
-                gasLimit: web3js.utils.toHex(500000),
-                to: contractAddress,
-                value: "0x0",
-                data: contract.methods.createListing(id, price).encodeABI(),
-                nonce: web3js.utils.toHex(count)
-            };
-            console.log(rawTransaction);
-            //creating tranaction via ethereumjs-tx
-            var transaction = new Tx(rawTransaction, { chain: "kovan" });
-            //signing transaction with private key
-            transaction.sign(privateKeyHex);
-            //sending transacton via web3js module
-            web3js.eth
-                .sendSignedTransaction("0x" + transaction.serialize().toString("hex"))
-                .on("transactionHash", console.log)
-                .on("receipt", console.log);
-        });
-
-        console.log("Listing created");
-    };
-
+    const instance = new web3.eth.Contract(contractABI, contractAddr);
+    console.log("Contract instantiated");
+    instance.methods.balance().call().then((response) => setBalance(response));
+    setInterval(instance.methods.getAdminAccountBalance().call().then((response) => setAdminBalance(response)), 5000);
 
     return (
         <div>
             <div className="mainDiv has-text-centered">
                 <h1 className="mainTitle">Your interest</h1>
-                <h1 className="bigText">Big Money here</h1>
+                <h1 className="bigText">{adminBalance}</h1>
             </div>
             <ParticlesBg type="polygon" bg={true} />
         </div>

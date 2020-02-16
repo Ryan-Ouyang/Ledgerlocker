@@ -107,6 +107,7 @@ contract DSR {
         }
     }
     
+    // Gets the balance on the smart contract with interest
     function balance() public view returns (uint256) {
        uint256 pie = pot.pie(address(this)); 
        uint256 chi = pot.chi();

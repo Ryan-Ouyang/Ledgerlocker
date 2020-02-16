@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Fortmatic from "fortmatic";
 import Web3 from "web3";
 import Box from "3box";
@@ -7,9 +7,10 @@ import axios from "axios";
 
 import "bulma/css/bulma.css";
 import "./App.css";
-import profileImage from "./assets/johndoe.png";
 
 import MainListing from "./components/MainListing/MainListing";
+import Owner from "./components/Owner/Owner";
+import Navbar from "./components/Navbar/Navbar";
 
 const fm = new Fortmatic("pk_test_C0C9ADE8AD6C86A9", "kovan");
 let web3 = new Web3(fm.getProvider());
@@ -711,56 +712,49 @@ export default function App() {
 	const [contract, setContract] = useState();
 	const [daiContract, setDaiContract] = useState();
 
-	useEffect(() => {
-		const fetchListings = async () => {
-			const result = await axios("http://localhost:3001/api/listings");
-			setListings(result.data);
-			console.log("Fetched listings");
-		};
+  useEffect(() => {
+    const fetchListings = async () => {
+      const result = await axios("http://localhost:3001/api/listings");
+      setListings(result.data);
+      console.log("Fetched listings");
+    };
 
-		const loginUser = async () => {
-			web3.eth.getAccounts().then(async address => {
-				setAddr(address[0]);
-				// addr = address[0]
-				console.log("Address: ", address[0]);
-				await open3Box(address[0]);
-				await set3BoxData("testing", "value");
-				await get3BoxData("testing");
-				await remove3BoxData("testing");
-				web3.eth.defaultAccount = `${address[0]}`;
-			});
-		};
+    const loginUser = async () => {
+      web3.eth.getAccounts().then(async address => {
+        setAddr(address[0]);
+        // addr = address[0]
+        console.log("Address: ", address[0]);
+        await open3Box(address[0]);
+        await set3BoxData("testing", "value");
+        await get3BoxData("testing");
+        await remove3BoxData("testing");
+      });
+    };
 
-		const instantiateContracts = async () => {
-			const instance = new web3.eth.Contract(
-				contractABI,
-				"0x684DA20907158AEC33d9ABfd479BBA298E64A458"
-			);
-			setContract(instance);
-			console.log("Contract instantiated");
-			const daiInstance = new web3.eth.Contract(
-				daiContractABI,
-				"0x4f96fe3b7a6cf9725f59d353f723c1bdb64ca6aa"
-			);
-			console.log("DAI Contract instantiated");
-			setDaiContract(daiInstance);
-		};
+    const instantiateContract = async () => {
+      const instance = new web3.eth.Contract(
+        contractABI,
+        "0xD0B9B721279E0F0c11c4c750f3530661097F016c"
+      );
+      setContract(instance);
+      console.log("Contract instantiated");
+    };
 
-		fetchListings();
-		loginUser();
-		instantiateContracts();
-	}, []);
+    fetchListings();
+    loginUser();
+    instantiateContract();
+  }, []);
 
-	return (
-		<Router>
-			<div>
-				{/* A <Switch> looks through its children <Route>s and
+  return (
+    <Router>
+      <div>
+        {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
 				<Switch>
 					<Route path="/lockcontrols">
 						<LockControls />
 					</Route>
-					<Route path="/">
+					<Route exact path="/">
 						<Home
 							listings={listings}
 							addr={addr}
@@ -774,6 +768,9 @@ export default function App() {
 					<Route path="/profile">
 						<Profile />
 					</Route>
+					<Route path="/owner">
+						<Owner />
+					</Route>
 				</Switch>
 			</div>
 		</Router>
@@ -781,14 +778,14 @@ export default function App() {
 }
 
 function Home(props) {
-	const leftColumnListings = [];
-	const rightColumnListings = [];
+  const leftColumnListings = [];
+  const rightColumnListings = [];
 
-	// For flowing two columns
-	for (let i = 0; i < props.listings.length; i += 2) {
-		leftColumnListings.push(props.listings[i]);
-		rightColumnListings.push(props.listings[i + 1]);
-	}
+  // For flowing two columns
+  for (let i = 0; i < props.listings.length; i += 2) {
+    leftColumnListings.push(props.listings[i]);
+    rightColumnListings.push(props.listings[i + 1]);
+  }
 
 	return (
 		<>
@@ -824,72 +821,40 @@ function Home(props) {
 }
 
 function Listings() {
-	return <p>testing</p>;
+  return <p>testing</p>;
 }
 
 function Profile() {
-	return <p>testing 2</p>;
+  return <p>testing 2</p>;
 }
 
 function LockControls() {
-	return (
-		<section>
-			<h1>LOCK CONTROLS:</h1>
-			<button>Unlock</button>
-			<button>Lock</button>
-		</section>
-	);
-}
-
-function Navbar(props) {
-	return (
-		<nav
-			className="navbar is-light"
-			role="navigation"
-			aria-label="main navigation"
-		>
-			<a className="navbar-item" href="https://bulma.io">
-				<img
-					src="https://bulma.io/images/bulma-logo.png"
-					width="112"
-					height="28"
-				></img>
-			</a>
-			<Link className="navbar-item" to="/">
-				Home
-			</Link>
-			<Link className="navbar-item" to="/search">
-				Search
-			</Link>
-			<div className="navbar-end">
-				<div className="navbar-item">
-					<p>{props.addr}</p>
-				</div>
-				<Link className="navbar-item" to="/profile">
-					<img src={profileImage} className="profile-img" />
-				</Link>
-			</div>
-		</nav>
-	);
+  return (
+    <section>
+      <h1>LOCK CONTROLS:</h1>
+      <button>Unlock</button>
+      <button>Lock</button>
+    </section>
+  );
 }
 
 async function open3Box(addr) {
-	box = await Box.openBox(addr, fm.getProvider());
-	await box.syncDone;
-	console.log("Opened 3box box for ", addr);
+  box = await Box.openBox(addr, fm.getProvider());
+  await box.syncDone;
+  console.log("Opened 3box box for ", addr);
 }
 
 async function set3BoxData(key, value) {
-	await box.private.set(key, value);
-	console.log("Set private value in 3box (key: ", key, ")");
+  await box.private.set(key, value);
+  console.log("Set private value in 3box (key: ", key, ")");
 }
 
 async function get3BoxData(key) {
-	await box.private.get(key);
-	console.log("Got private value in 3box (key: ", key, ")");
+  await box.private.get(key);
+  console.log("Got private value in 3box (key: ", key, ")");
 }
 
 async function remove3BoxData(key) {
-	await box.private.remove(key);
-	console.log("Removed private value in 3box (key: ", key, ")");
+  await box.private.remove(key);
+  console.log("Removed private value in 3box (key: ", key, ")");
 }

@@ -42,12 +42,12 @@ export class Listing extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get _id(): BigInt {
-    let value = this.get("_id");
+  get listingId(): BigInt {
+    let value = this.get("listingId");
     return value.toBigInt();
   }
 
-  set _id(value: BigInt) {
-    this.set("_id", Value.fromBigInt(value));
+  set listingId(value: BigInt) {
+    this.set("listingId", Value.fromBigInt(value));
   }
 }

@@ -92,7 +92,8 @@ io.on("connection", function(socket) {
   console.log("Lock connected. Sending new code...");
   var val = Math.floor(1000 + Math.random() * 9000);
   lockCode = val;
-  io.sockets.emit("idState", val);
+  //io.sockets.emit("idState", val);
+  io.sockets.emit("idstate", "9786");
   console.log("Sent code ", val);
 
   socket.on("postLock", function(value) {

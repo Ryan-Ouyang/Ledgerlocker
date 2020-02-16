@@ -135,11 +135,9 @@ app.post("/api/changeID", function(req, res) {
   res.sendStatus(200);
 });
 
-app.post("/api/checkin", function(req, res) {
-  res.sendStatus(200);
-});
-
 app.post("/api/checkout", function(req, res) {
+  listings[req.body.id].booked = false;
+  listings[req.body.id].renter = "0x0000000000000000000000000000000000000000";
   res.sendStatus(200);
 });
 

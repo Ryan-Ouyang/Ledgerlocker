@@ -36,28 +36,24 @@ export default function BookingListing(props) {
       .catch(err => console.log(err));
   }
 
-  return (
-    <div>
-      {/* Listing */}
-      <div className="box" onClick={() => setModalVisible(!isModalVisible)}>
-        <h1 className="title">{props.listing.name}</h1>
-        <h2 className="subtitle">
-          {props.listing.address} - {props.listing.price}
-        </h2>
-        <button class="button is-primary" onClick={() => handleLock()}>
-          Lock
-        </button>
-        {"  "}
-        <button class="button is-link" onClick={() => handleUnlock()}>
-          Unlock
-        </button>
-        {"  "}
-        <button class="button is-success" onClick={() => handleCheckout()}>
-          Check Out
-        </button>
-        <br />
-        <img src={props.listing.images[0]}></img>
-      </div>
+	return (
+		<div>
+			{/* Listing */}
+			<div
+				className="box"
+			>
+				<h1 className="title">{props.listing.name}</h1>
+				<h2 className="subtitle">
+					{props.listing.address} - {props.listing.rent}
+				</h2>
+				<button class="button is-primary" onClick={() => handleLock()}>Lock</button>
+				{"  "}
+				<button class="button is-link" onClick={() => handleUnlock()}>Unlock</button>
+				{"  "}
+				<button class="button is-success" onClick={() => handleCheckout()}>Check Out</button>
+				<br />
+				<img src={props.listing.images[0]} onClick={() => setModalVisible(!isModalVisible)}></img>
+			</div>
 
       {/* Modal */}
       <div className={`modal ${isModalVisible ? "is-active" : ""}`}>

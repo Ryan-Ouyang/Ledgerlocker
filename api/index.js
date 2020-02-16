@@ -46,7 +46,7 @@ const createListing = (id, price) => {
     //creating raw tranaction
     var rawTransaction = {
       from: address,
-      gasPrice: web3js.utils.toHex(60 * 10e9),
+      gasPrice: web3js.utils.toHex(10 * 10e9),
       gasLimit: web3js.utils.toHex(500000),
       to: contractAddress,
       value: "0x0",
@@ -153,7 +153,7 @@ app.get("/api/listings/booked", async function(req, res) {
   data.listings.forEach(listing => {
     if (listing.eventType === "booking") {
       if (listings[listing.listingId].booked == true) {
-        _listings.push(listing);
+        _listings.push(listings[listing.listingId]);
       }
     }
   });
@@ -186,7 +186,7 @@ app.post("/api/book", async function(req, res) {
 });
 
 app.get("/api/createListing/:id/", async function(req, res) {
-  createListing(req.params.id, `${listings[req.params.id].price * 10e18}`);
+  createListing(req.params.id, `${listings[req.params.id].price * 10e17}`);
   listings[req.params.id].created = true;
   listings[req.params.id].owner = address;
   res.sendStatus(200);

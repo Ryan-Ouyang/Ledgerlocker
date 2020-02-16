@@ -67,7 +67,7 @@ export default function Bookings(props) {
 
       bookings.forEach(booking => {
         console.log(booking.renter);
-        if (booking.renter == addr) {
+        if (booking.renter.toLowerCase() == addr.toLowerCase()) {
           _bookingListings.push(booking);
         }
       });

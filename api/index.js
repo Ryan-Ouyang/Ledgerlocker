@@ -9,6 +9,11 @@ const graphQLQuery = `{
   listings {
     id
     listingId
+    price
+    timestamp
+    renter
+    owner
+    eventType
   }
 }
 `;
@@ -43,32 +48,45 @@ io.on("connection", function(socket) {
 app.post("/api/unlock/", function(req, res) {
   if (locked === "locked") {
     io.sockets.emit("lockState", "unlock");
-    res.send(200);
+    res.sendStatus(200);
   }
 });
 
 app.post("/api/lock/", function(req, res) {
   if (locked === "unlocked") {
     io.sockets.emit("lockState", "lock");
-    res.send(200);
+    res.sendStatus(200);
   }
 });
 
 app.post("/api/changeID", function(req, res) {
   io.sockets.emit("idState", req.body.id);
-  res.send(200);
+  res.sendStatus(200);
 });
 
-app.get("/api/query", async function(req, res) {
+app.post("/api/checkin", function(req, res) {
+  res.sendStatus(200);
+});
+
+app.post("/api/checkout", function(req, res) {
+  res.sendStatus(200);
+});
+
+app.get("/api/listings/booked", async function(req, res) {
   var data = await request(
     "https://api.thegraph.com/subgraphs/name/haardikk21/ledgerlocker",
     graphQLQuery
   );
-  res.send(data);
-});
 
-app.get("/api/listings/booked", function(req, res) {
-  res.send(200);
+  var listings = [];
+
+  data.listings.forEach(listing => {
+    if (listing.eventType === "booking") {
+      listings.push(listing);
+    }
+  });
+
+  res.json(listings);
 });
 
 app.get("/api/listings", function(req, res) {

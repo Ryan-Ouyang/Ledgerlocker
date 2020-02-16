@@ -26,3 +26,9 @@ That's 25.9 **B IS FOR BUFFICORN** Books!!
 
 ### Buyer / Seller Marketplace
 
+# Hardware Prototype
+We decided to use apply this protocol to a specific use case for demoing: the experience of home leasing. In this example, a person looking to lease a home stakes an amount correlating to the daily rent price. They then check in by entering a generated code displayed at the door, and can unlock the door via a portal app.
+
+This fee-free model allows homeowners to charge less, while enabling the service to run sustainably.
+
+For the proof of concept, we built a working door (with open AND close functionality). It has an OLED display that shows the door's state and the unique ID sent to the door. The entire hardware prototype is based off an ESP8266 device, which sends and receives data via WebSockets. The piece of aluminum on the side of the frame lets the door detect if it's closed so that it can lock itself after the user.

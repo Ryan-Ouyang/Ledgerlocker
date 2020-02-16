@@ -550,7 +550,7 @@ app.get("/api/listings", function(req, res) {
       name: "Lovely Micro-Studio in Forest Park, GA",
       id: 1,
       address: "Forest Park, GA",
-      rent: "45 DAI/day",
+      rent: 45,
       booked: true,
       stake: 2,
       renter: "0xsdkjfn3r289ry2930fosdfln2309rj23ffon3wf",
@@ -572,7 +572,7 @@ app.get("/api/listings", function(req, res) {
       name: "Cosy Apartment in Denver, CO",
       id: 2,
       address: "Denver, CO",
-      rent: "50 DAI/day",
+      rent: 50,
       booked: true,
       renter: "0xd02b00EFd6E38d7735C7b1793edD6379E8BF5efB",
       stake: 2,
@@ -588,6 +588,25 @@ app.get("/api/listings", function(req, res) {
         "https://www.padsplit.com/img/psproperty/psproperty_158_2_1578610474.769763.jpg",
         "https://www.padsplit.com/img/psproperty/psproperty_158_1_1578610474.769763.jpg",
         "https://www.padsplit.com/img/psproperty/psproperty_158_0_1578610474.769763.jpg"
+      ]
+    },
+    {
+      name: "Historic Carriage House in Denver's Oldest Neighborhood",
+      id: 3,
+      address: "55 East 31st Avenue, Denver, CO",
+      rent: 50,
+      booked: false,
+      stake: 2,
+      renter: "0x0000000000000000000000000000000000000000",
+      owner: "0xd02b00EFd6E38d7735C7b1793edD6379E8BF5efB",
+      description:
+        "Prepare to be charmed by the exposed brickwork and quirky decor of this lovely historic home that once sheltered horses in the late 1800s. It's been featured in Architectural Digest online as Colorado's most unique and beautiful Airbnb property.",
+      images: [
+        "https://a0.muscache.com/4ea/air/v2/pictures/8a093f7e-d602-4487-9399-c2daa11fcc2e.jpg?t=r:w2500-h1500-sfit,e:fjpg-c90",
+        "https://a0.muscache.com/4ea/air/v2/pictures/877a6b3f-aaa6-4cd0-9452-0a5cd21ce09a.jpg?t=r:w2500-h1500-sfit,e:fjpg-c90",
+        "https://a0.muscache.com/4ea/air/v2/pictures/d50e1732-4bb0-4121-8636-4e86dd87066c.jpg?t=r:w2500-h1500-sfit,e:fjpg-c90",
+        "https://a0.muscache.com/4ea/air/v2/pictures/9e2d6a5c-f0a7-45ea-a5fd-540cce73256a.jpg?t=r:w2500-h1500-sfit,e:fjpg-c90",
+        "https://a0.muscache.com/4ea/air/v2/pictures/f0e796f0-9fe9-4c6f-a2ab-9ad007a675a9.jpg?t=r:w2500-h1500-sfit,e:fjpg-c90"
       ]
     }
   ];

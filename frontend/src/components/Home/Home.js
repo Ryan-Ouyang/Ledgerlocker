@@ -67,8 +67,13 @@ export default function Home(props) {
 
   // For flowing two columns
   for (let i = 0; i < listings.length; i += 2) {
-    leftColumnListings.push(listings[i]);
-    rightColumnListings.push(listings[i + 1]);
+    if (listings[i] != null) {
+      leftColumnListings.push(listings[i]);
+    }
+
+    if (listings[i + 1] != null) {
+      rightColumnListings.push(listings[i + 1]);
+    }
   }
 
   return (

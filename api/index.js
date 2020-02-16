@@ -115,6 +115,8 @@ app.post("/api/unlock/", function(req, res) {
   if (locked === "locked") {
     io.sockets.emit("lockState", "unlock");
     res.sendStatus(200);
+  } else {
+    res.sendStatus(500);
   }
 });
 
@@ -123,9 +125,12 @@ app.get("/api/lockCode", function(req, res) {
 });
 
 app.post("/api/lock/", function(req, res) {
-  if (locked === "unlocked" && doorClosed === "closed") {
+  // if (locked === "unlocked" && doorClosed === "closed") {
+  if (locked === "unlocked") {
     io.sockets.emit("lockState", "lock");
     res.sendStatus(200);
+  } else {
+    res.sendStatus(500);
   }
 });
 

@@ -41,7 +41,6 @@ export default function BookingListing(props) {
 			{/* Listing */}
 			<div
 				className="box"
-				onClick={() => setModalVisible(!isModalVisible)}
 			>
 				<h1 className="title">{props.listing.name}</h1>
 				<h2 className="subtitle">
@@ -53,7 +52,7 @@ export default function BookingListing(props) {
 				{"  "}
 				<button class="button is-success" onClick={() => handleCheckout()}>Check Out</button>
 				<br />
-				<img src={props.listing.images[0]}></img>
+				<img src={props.listing.images[0]} onClick={() => setModalVisible(!isModalVisible)}></img>
 			</div>
 
 			{/* Modal */}

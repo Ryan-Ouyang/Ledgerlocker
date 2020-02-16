@@ -19,7 +19,7 @@ let thread;
 let did;
 
 let spaceName = "ledgerlocker-test1";
-let threadName = "ll-test";
+let threadName = "ll";
 
 export default function Owner(props) {
   const [addr, setAddr] = useState("");

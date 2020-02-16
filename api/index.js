@@ -17,7 +17,7 @@ const address = "0xA5A4E75ED687E45deC203abB3b1a14516D1078D0";
 // Contract info
 const privateKeyHex = Buffer.from(privateKey, "hex");
 
-const contractAddress = "0xA8AfBbb79Aa49EC8778a8A6e44D40630Ef327500";
+const contractAddress = "0xf13a19affd74525ca8e25704c437a8c4c88505b4";
 
 const contractABI = require("./abi");
 let listings = require("./listings");

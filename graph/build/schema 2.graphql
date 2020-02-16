@@ -1,0 +1,9 @@
+type Listing @entity {
+  id: ID!
+  listingId: BigInt!
+  price: BigInt
+  booked: Boolean
+  renter: String
+  owner: String
+  eventType: String!
+}

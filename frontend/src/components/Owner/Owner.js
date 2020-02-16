@@ -18,7 +18,7 @@ let space;
 let thread;
 let did;
 
-let spaceName = "ledgerlocker-test1";
+let spaceName = "ledgerlocker";
 let threadName = "ll";
 
 export default function Owner(props) {

@@ -14,7 +14,7 @@ const fm = new Fortmatic("pk_test_C0C9ADE8AD6C86A9", "kovan");
 let web3 = new Web3(fm.getProvider());
 
 let box, space, thread, did;
-let spaceName = "ledgerlocker-test1";
+let spaceName = "ledgerlocker";
 let threadName = "ll";
 
 export default function Bookings(props) {

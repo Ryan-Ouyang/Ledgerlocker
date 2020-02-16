@@ -61,6 +61,8 @@ export function handlelistingCreated(event: listingCreated): void {
   entity.renter = event.params._renter;
   entity.owner = event.params._owner;
   entity.eventType = "creating";
+
+  entity.save();
 }
 
 // Note: If a handler doesn't require existing field values, it is faster

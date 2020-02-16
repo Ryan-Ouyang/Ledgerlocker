@@ -6,6 +6,7 @@ import "./App.css";
 import Bookings from "./components/Bookings/Bookings";
 import Owner from "./components/Owner/Owner";
 import Home from "./components/Home/Home";
+import Dashboard from "./components/Dashboard/Dashboard";
 
 export default function App() {
   return (
@@ -22,6 +23,9 @@ export default function App() {
           </Route>
           <Route path="/owner">
             <Owner />
+          </Route>
+          <Route path="/dashboard">
+            <Dashboard />
           </Route>
         </Switch>
       </div>

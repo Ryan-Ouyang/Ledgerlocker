@@ -16,19 +16,25 @@ const graphQLQuery = `{
 app.use(cors());
 app.use(express.json());
 
-var locked; //true for locked
-var doorClosed; //true for closed
+var locked;
+var doorClosed;
 
 io.on("connection", function(socket) {
-  console.log("Lock connected");
+  console.log("Lock connected. Sending new code...");
+  var val = Math.floor(1000 + Math.random() * 9000);
+  io.sockets.emit("idState", val);
+  console.log("Sent code ", val);
+
   socket.on("postLock", function(value) {
     console.log("Lock: " + value);
-    locked = value;
+    locked = value; //locked or unlocked
   });
+
   socket.on("postDoor", function(value) {
     console.log("Door: " + value);
-    doorClosed = value;
+    doorClosed = value; // closed or open
   });
+
   socket.on("disconnect", function() {
     console.log("Lock disconnected");
   });
@@ -59,6 +65,10 @@ app.get("/api/query", async function(req, res) {
     graphQLQuery
   );
   res.send(data);
+});
+
+app.get("/api/listings/booked", function(req, res) {
+  res.send(200);
 });
 
 app.get("/api/listings", function(req, res) {

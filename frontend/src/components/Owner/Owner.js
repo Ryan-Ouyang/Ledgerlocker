@@ -40,7 +40,12 @@ export default function Owner(props) {
 
   useEffect(() => {
     const createJoinThread = async () => {
-      await open3Box(addr);
+      box = await Box.openBox(addr, fm.getProvider());
+      space = await box.openSpace(spaceName);
+      await box.syncDone;
+      await space.syncDone;
+      const config = await Box.getConfig(addr);
+      did = config.spaces[spaceName].DID;
       thread = await space.joinThread(threadName, {
         firstModerator: "did:3:0"
       });
@@ -150,29 +155,4 @@ export default function Owner(props) {
       </div>
     </>
   );
-}
-
-async function open3Box(addr) {
-  box = await Box.openBox(addr, fm.getProvider());
-  space = await box.openSpace(spaceName);
-  await box.syncDone;
-  await space.syncDone;
-  const config = await Box.getConfig(addr);
-  did = config.spaces[spaceName].DID;
-  console.log("Opened 3box box for ", addr);
-}
-
-async function set3BoxData(key, value) {
-  await space.private.set(key, value);
-  console.log("Set private value in 3box (key: ", key, ")");
-}
-
-async function get3BoxData(key) {
-  await space.private.get(key);
-  console.log("Got private value in 3box (key: ", key, ")");
-}
-
-async function remove3BoxData(key) {
-  await space.private.remove(key);
-  console.log("Removed private value in 3box (key: ", key, ")");
 }

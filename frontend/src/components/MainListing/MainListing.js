@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
 import Fortmatic from "fortmatic";
+import Box from "3box";
 import Web3 from "web3";
 import axios from "axios";
-import Box from "3box";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -22,11 +22,14 @@ export default function MainListing(props) {
   useEffect(() => {
     const loginUser = async () => {
       web3.eth.getAccounts().then(async address => {
-        setAddr(address[0]);
-        // addr = address[0]
-        console.log("Address: ", address[0]);
-        await open3Box(address[0]);
         web3.eth.defaultAccount = `${address[0]}`;
+        box = await Box.openBox(address[0], fm.getProvider());
+
+        space = await box.openSpace(spaceName);
+        await box.syncDone;
+        await space.syncDone;
+        console.log("Opened 3box in MainListing for ", addr);
+        setAddr(address[0]);
       });
     };
 
@@ -144,25 +147,7 @@ export default function MainListing(props) {
   );
 }
 
-async function open3Box(addr) {
-  box = await Box.openBox(addr, fm.getProvider());
-  space = await box.openSpace(spaceName);
-  await box.syncDone;
-  await space.syncDone;
-  console.log("Opened 3box box for ", addr);
-}
-
 async function set3BoxData(key, value) {
   await space.private.set(key, value);
   console.log("Set private value in 3box (key: ", key, ")");
-}
-
-async function get3BoxData(key) {
-  await space.private.get(key);
-  console.log("Got private value in 3box (key: ", key, ")");
-}
-
-async function remove3BoxData(key) {
-  await space.private.remove(key);
-  console.log("Removed private value in 3box (key: ", key, ")");
 }

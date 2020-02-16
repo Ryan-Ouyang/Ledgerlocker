@@ -13,11 +13,6 @@ import daiContractABI from "../../abis/dai";
 const fm = new Fortmatic("pk_test_C0C9ADE8AD6C86A9", "kovan");
 let web3 = new Web3(fm.getProvider());
 
-let box;
-let space;
-
-let spaceName = "ledgerlocker";
-
 const contractAddr = "0x754cEd19DaC5e791Fe989281747771F38626C9DC";
 const daiContractAddr = "0x4f96fe3b7a6cf9725f59d353f723c1bdb64ca6aa";
 
@@ -32,8 +27,6 @@ export default function Home(props) {
       web3.eth.getAccounts().then(async address => {
         setAddr(address[0]);
         // addr = address[0]
-        console.log("Address: ", address[0]);
-        await open3Box(address[0]);
         web3.eth.defaultAccount = `${address[0]}`;
       });
     };
@@ -109,28 +102,4 @@ export default function Home(props) {
       </div>
     </>
   );
-}
-
-async function open3Box(addr) {
-  console.log("trying to open");
-  box = await Box.openBox(addr, fm.getProvider());
-  space = await box.openSpace(spaceName);
-  await box.syncDone;
-  await space.syncDone;
-  console.log("Opened 3box box for ", addr);
-}
-
-async function set3BoxData(key, value) {
-  await space.private.set(key, value);
-  console.log("Set private value in 3box (key: ", key, ")");
-}
-
-async function get3BoxData(key) {
-  await space.private.get(key);
-  console.log("Got private value in 3box (key: ", key, ")");
-}
-
-async function remove3BoxData(key) {
-  await space.private.remove(key);
-  console.log("Removed private value in 3box (key: ", key, ")");
 }

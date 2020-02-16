@@ -14,8 +14,8 @@ const contractABI = [
         type: "uint256"
       },
       {
-        name: "_timestamp",
-        type: "uint256"
+        name: "_booked",
+        type: "bool"
       },
       {
         name: "_renter",
@@ -42,6 +42,15 @@ const contractABI = [
     ],
     payable: false,
     stateMutability: "view",
+    type: "function"
+  },
+  {
+    constant: false,
+    inputs: [],
+    name: "withdraw",
+    outputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
     type: "function"
   },
   {
@@ -79,6 +88,20 @@ const contractABI = [
     outputs: [],
     payable: false,
     stateMutability: "nonpayable",
+    type: "function"
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: "iDaiContract",
+    outputs: [
+      {
+        name: "",
+        type: "address"
+      }
+    ],
+    payable: false,
+    stateMutability: "view",
     type: "function"
   },
   {
@@ -265,6 +288,15 @@ const contractABI = [
   },
   {
     constant: false,
+    inputs: [],
+    name: "adminWithdraw",
+    outputs: [],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function"
+  },
+  {
+    constant: false,
     inputs: [
       {
         name: "newOwner",
@@ -324,8 +356,40 @@ const contractABI = [
       },
       {
         indexed: false,
-        name: "_timestamp",
+        name: "_booked",
+        type: "bool"
+      },
+      {
+        indexed: false,
+        name: "_renter",
+        type: "address"
+      },
+      {
+        indexed: false,
+        name: "_owner",
+        type: "address"
+      }
+    ],
+    name: "listingCreated",
+    type: "event"
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        name: "_id",
         type: "uint256"
+      },
+      {
+        indexed: false,
+        name: "_price",
+        type: "uint256"
+      },
+      {
+        indexed: false,
+        name: "_booked",
+        type: "bool"
       },
       {
         indexed: false,
@@ -356,8 +420,8 @@ const contractABI = [
       },
       {
         indexed: false,
-        name: "_timestamp",
-        type: "uint256"
+        name: "_booked",
+        type: "bool"
       },
       {
         indexed: false,

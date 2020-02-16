@@ -3,6 +3,7 @@ import {
   Contract,
   listingBooked,
   listingClosed,
+  listingCreated,
   OwnershipTransferred
 } from "../generated/Contract/Contract";
 import { Listing } from "../generated/schema";
@@ -21,7 +22,7 @@ export function handlelistingBooked(event: listingBooked): void {
   // Entity fields can be set based on event parameters
   entity.listingId = event.params._id;
   entity.price = event.params._price;
-  entity.timestamp = event.params._timestamp;
+  entity.booked = event.params._booked;
   entity.renter = event.params._renter;
   entity.owner = event.params._owner;
   entity.eventType = "booking";
@@ -39,12 +40,27 @@ export function handlelistingClosed(event: listingClosed): void {
 
   entity.listingId = event.params._id;
   entity.price = event.params._price;
-  entity.timestamp = event.params._timestamp;
+  entity.booked = event.params._booked;
   entity.renter = event.params._renter;
   entity.owner = event.params._owner;
   entity.eventType = "closing";
 
   entity.save();
+}
+
+export function handlelistingCreated(event: listingCreated): void {
+  let entity = Listing.load(event.transaction.from.toHex());
+
+  if (entity == null) {
+    entity = new Listing(event.transaction.from.toHex());
+  }
+
+  entity.listingId = event.params._id;
+  entity.price = event.params._price;
+  entity.booked = event.params._booked;
+  entity.renter = event.params._renter;
+  entity.owner = event.params._owner;
+  entity.eventType = "creating";
 }
 
 // Note: If a handler doesn't require existing field values, it is faster

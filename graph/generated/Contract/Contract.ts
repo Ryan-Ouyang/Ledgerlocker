@@ -15,6 +15,40 @@ import {
   CallResult
 } from "@graphprotocol/graph-ts";
 
+export class listingCreated extends EthereumEvent {
+  get params(): listingCreated__Params {
+    return new listingCreated__Params(this);
+  }
+}
+
+export class listingCreated__Params {
+  _event: listingCreated;
+
+  constructor(event: listingCreated) {
+    this._event = event;
+  }
+
+  get _id(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
+  }
+
+  get _price(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+
+  get _booked(): boolean {
+    return this._event.parameters[2].value.toBoolean();
+  }
+
+  get _renter(): Address {
+    return this._event.parameters[3].value.toAddress();
+  }
+
+  get _owner(): Address {
+    return this._event.parameters[4].value.toAddress();
+  }
+}
+
 export class listingBooked extends EthereumEvent {
   get params(): listingBooked__Params {
     return new listingBooked__Params(this);
@@ -36,8 +70,8 @@ export class listingBooked__Params {
     return this._event.parameters[1].value.toBigInt();
   }
 
-  get _timestamp(): BigInt {
-    return this._event.parameters[2].value.toBigInt();
+  get _booked(): boolean {
+    return this._event.parameters[2].value.toBoolean();
   }
 
   get _renter(): Address {
@@ -70,8 +104,8 @@ export class listingClosed__Params {
     return this._event.parameters[1].value.toBigInt();
   }
 
-  get _timestamp(): BigInt {
-    return this._event.parameters[2].value.toBigInt();
+  get _booked(): boolean {
+    return this._event.parameters[2].value.toBoolean();
   }
 
   get _renter(): Address {
@@ -107,13 +141,13 @@ export class OwnershipTransferred__Params {
 
 export class Contract__getListingResult {
   value0: BigInt;
-  value1: BigInt;
+  value1: boolean;
   value2: Address;
   value3: Address;
 
   constructor(
     value0: BigInt,
-    value1: BigInt,
+    value1: boolean,
     value2: Address,
     value3: Address
   ) {
@@ -126,7 +160,7 @@ export class Contract__getListingResult {
   toMap(): TypedMap<string, EthereumValue> {
     let map = new TypedMap<string, EthereumValue>();
     map.set("value0", EthereumValue.fromUnsignedBigInt(this.value0));
-    map.set("value1", EthereumValue.fromUnsignedBigInt(this.value1));
+    map.set("value1", EthereumValue.fromBoolean(this.value1));
     map.set("value2", EthereumValue.fromAddress(this.value2));
     map.set("value3", EthereumValue.fromAddress(this.value3));
     return map;
@@ -145,7 +179,7 @@ export class Contract extends SmartContract {
 
     return new Contract__getListingResult(
       result[0].toBigInt(),
-      result[1].toBigInt(),
+      result[1].toBoolean(),
       result[2].toAddress(),
       result[3].toAddress()
     );
@@ -162,7 +196,7 @@ export class Contract extends SmartContract {
     return CallResult.fromValue(
       new Contract__getListingResult(
         value[0].toBigInt(),
-        value[1].toBigInt(),
+        value[1].toBoolean(),
         value[2].toAddress(),
         value[3].toAddress()
       )
@@ -192,6 +226,21 @@ export class Contract extends SmartContract {
 
   try_pot(): CallResult<Address> {
     let result = super.tryCall("pot", []);
+    if (result.reverted) {
+      return new CallResult();
+    }
+    let value = result.value;
+    return CallResult.fromValue(value[0].toAddress());
+  }
+
+  iDaiContract(): Address {
+    let result = super.call("iDaiContract", []);
+
+    return result[0].toAddress();
+  }
+
+  try_iDaiContract(): CallResult<Address> {
+    let result = super.tryCall("iDaiContract", []);
     if (result.reverted) {
       return new CallResult();
     }
@@ -362,6 +411,32 @@ export class Contract extends SmartContract {
   }
 }
 
+export class WithdrawCall extends EthereumCall {
+  get inputs(): WithdrawCall__Inputs {
+    return new WithdrawCall__Inputs(this);
+  }
+
+  get outputs(): WithdrawCall__Outputs {
+    return new WithdrawCall__Outputs(this);
+  }
+}
+
+export class WithdrawCall__Inputs {
+  _call: WithdrawCall;
+
+  constructor(call: WithdrawCall) {
+    this._call = call;
+  }
+}
+
+export class WithdrawCall__Outputs {
+  _call: WithdrawCall;
+
+  constructor(call: WithdrawCall) {
+    this._call = call;
+  }
+}
+
 export class SetSecondsPerBlockCall extends EthereumCall {
   get inputs(): SetSecondsPerBlockCall__Inputs {
     return new SetSecondsPerBlockCall__Inputs(this);
@@ -474,6 +549,32 @@ export class CreateListingCall__Outputs {
   _call: CreateListingCall;
 
   constructor(call: CreateListingCall) {
+    this._call = call;
+  }
+}
+
+export class AdminWithdrawCall extends EthereumCall {
+  get inputs(): AdminWithdrawCall__Inputs {
+    return new AdminWithdrawCall__Inputs(this);
+  }
+
+  get outputs(): AdminWithdrawCall__Outputs {
+    return new AdminWithdrawCall__Outputs(this);
+  }
+}
+
+export class AdminWithdrawCall__Inputs {
+  _call: AdminWithdrawCall;
+
+  constructor(call: AdminWithdrawCall) {
+    this._call = call;
+  }
+}
+
+export class AdminWithdrawCall__Outputs {
+  _call: AdminWithdrawCall;
+
+  constructor(call: AdminWithdrawCall) {
     this._call = call;
   }
 }

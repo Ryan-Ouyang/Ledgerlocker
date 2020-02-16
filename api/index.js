@@ -409,7 +409,7 @@ const contractABI = [
     type: "event"
   }
 ];
-const contractAddress = "0xE6023B2DaA371AB5fda43E12C4b2BbB86C0955f6";
+const contractAddress = "0x55A2718325b19B5373EB078403ad9f8B113eB51f";
 
 // web3js = new web3("https://shared-parity-kovan.nodes.deploy.radar.tech/?apikey=aa471b3aef7702ef45419b6b784f0dfc7d7575f01fef1cab");
 web3js = new web3(

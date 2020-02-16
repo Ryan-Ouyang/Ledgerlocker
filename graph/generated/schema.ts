@@ -68,21 +68,13 @@ export class Listing extends Entity {
     }
   }
 
-  get timestamp(): BigInt | null {
-    let value = this.get("timestamp");
-    if (value === null) {
-      return null;
-    } else {
-      return value.toBigInt();
-    }
+  get booked(): boolean {
+    let value = this.get("booked");
+    return value.toBoolean();
   }
 
-  set timestamp(value: BigInt | null) {
-    if (value === null) {
-      this.unset("timestamp");
-    } else {
-      this.set("timestamp", Value.fromBigInt(value as BigInt));
-    }
+  set booked(value: boolean) {
+    this.set("booked", Value.fromBoolean(value));
   }
 
   get renter(): Bytes | null {

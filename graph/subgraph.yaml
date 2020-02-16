@@ -6,7 +6,7 @@ dataSources:
     name: Contract
     network: kovan
     source:
-      address: "0xE6023B2DaA371AB5fda43E12C4b2BbB86C0955f6"
+      address: "0x55A2718325b19B5373EB078403ad9f8B113eB51f"
       abi: Contract
       startBlock: 16789422
     mapping:
@@ -16,13 +16,16 @@ dataSources:
       entities:
         - listingBooked
         - listingClosed
+        - listingCreated
         - OwnershipTransferred
       abis:
         - name: Contract
           file: ./abis/Contract.json
       eventHandlers:
-        - event: listingBooked(uint256,uint256,uint256,address,address)
+        - event: listingBooked(uint256,uint256,bool,address,address)
           handler: handlelistingBooked
-        - event: listingClosed(uint256,uint256,uint256,address,address)
+        - event: listingClosed(uint256,uint256,bool,address,address)
           handler: handlelistingClosed
+        - event: listingCreated(uint256,uint256,bool,address,address)
+          handler: handlelistingCreated
       file: ./src/mapping.ts

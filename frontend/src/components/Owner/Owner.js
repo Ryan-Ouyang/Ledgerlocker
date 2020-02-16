@@ -70,7 +70,7 @@ export default function Owner(props) {
       let _ownerListings = [];
 
       listings.forEach(listing => {
-        if (listing.owner == addr) {
+        if (listing.owner.toLowerCase() == addr.toLowerCase()) {
           _ownerListings.push(listing);
         }
       });

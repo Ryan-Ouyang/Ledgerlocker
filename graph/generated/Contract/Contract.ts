@@ -31,6 +31,22 @@ export class listingBooked__Params {
   get _id(): BigInt {
     return this._event.parameters[0].value.toBigInt();
   }
+
+  get _price(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+
+  get _timestamp(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+
+  get _renter(): Address {
+    return this._event.parameters[3].value.toAddress();
+  }
+
+  get _owner(): Address {
+    return this._event.parameters[4].value.toAddress();
+  }
 }
 
 export class listingClosed extends EthereumEvent {
@@ -48,6 +64,22 @@ export class listingClosed__Params {
 
   get _id(): BigInt {
     return this._event.parameters[0].value.toBigInt();
+  }
+
+  get _price(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+
+  get _timestamp(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+
+  get _renter(): Address {
+    return this._event.parameters[3].value.toAddress();
+  }
+
+  get _owner(): Address {
+    return this._event.parameters[4].value.toAddress();
   }
 }
 
@@ -106,104 +138,6 @@ export class Contract extends SmartContract {
     return new Contract("Contract", address);
   }
 
-  balance(): BigInt {
-    let result = super.call("balance", []);
-
-    return result[0].toBigInt();
-  }
-
-  try_balance(): CallResult<BigInt> {
-    let result = super.tryCall("balance", []);
-    if (result.reverted) {
-      return new CallResult();
-    }
-    let value = result.value;
-    return CallResult.fromValue(value[0].toBigInt());
-  }
-
-  daiJoin(): Address {
-    let result = super.call("daiJoin", []);
-
-    return result[0].toAddress();
-  }
-
-  try_daiJoin(): CallResult<Address> {
-    let result = super.tryCall("daiJoin", []);
-    if (result.reverted) {
-      return new CallResult();
-    }
-    let value = result.value;
-    return CallResult.fromValue(value[0].toAddress());
-  }
-
-  daiToken(): Address {
-    let result = super.call("daiToken", []);
-
-    return result[0].toAddress();
-  }
-
-  try_daiToken(): CallResult<Address> {
-    let result = super.tryCall("daiToken", []);
-    if (result.reverted) {
-      return new CallResult();
-    }
-    let value = result.value;
-    return CallResult.fromValue(value[0].toAddress());
-  }
-
-  getAccountBalance(_address: Address): BigInt {
-    let result = super.call("getAccountBalance", [
-      EthereumValue.fromAddress(_address)
-    ]);
-
-    return result[0].toBigInt();
-  }
-
-  try_getAccountBalance(_address: Address): CallResult<BigInt> {
-    let result = super.tryCall("getAccountBalance", [
-      EthereumValue.fromAddress(_address)
-    ]);
-    if (result.reverted) {
-      return new CallResult();
-    }
-    let value = result.value;
-    return CallResult.fromValue(value[0].toBigInt());
-  }
-
-  getAdminAccountBalance(): BigInt {
-    let result = super.call("getAdminAccountBalance", []);
-
-    return result[0].toBigInt();
-  }
-
-  try_getAdminAccountBalance(): CallResult<BigInt> {
-    let result = super.tryCall("getAdminAccountBalance", []);
-    if (result.reverted) {
-      return new CallResult();
-    }
-    let value = result.value;
-    return CallResult.fromValue(value[0].toBigInt());
-  }
-
-  getFutureTimestamp(_duration: BigInt): BigInt {
-    let result = super.call("getFutureTimestamp", [
-      EthereumValue.fromUnsignedBigInt(_duration)
-    ]);
-
-    return result[0].toBigInt();
-  }
-
-  try_getFutureTimestamp(_duration: BigInt): CallResult<BigInt> {
-    let result = super.tryCall("getFutureTimestamp", [
-      EthereumValue.fromUnsignedBigInt(_duration)
-    ]);
-    if (result.reverted) {
-      return new CallResult();
-    }
-    let value = result.value;
-    return CallResult.fromValue(value[0].toBigInt());
-  }
-
   getListing(_id: BigInt): Contract__getListingResult {
     let result = super.call("getListing", [
       EthereumValue.fromUnsignedBigInt(_id)
@@ -233,6 +167,36 @@ export class Contract extends SmartContract {
         value[3].toAddress()
       )
     );
+  }
+
+  vat(): Address {
+    let result = super.call("vat", []);
+
+    return result[0].toAddress();
+  }
+
+  try_vat(): CallResult<Address> {
+    let result = super.tryCall("vat", []);
+    if (result.reverted) {
+      return new CallResult();
+    }
+    let value = result.value;
+    return CallResult.fromValue(value[0].toAddress());
+  }
+
+  pot(): Address {
+    let result = super.call("pot", []);
+
+    return result[0].toAddress();
+  }
+
+  try_pot(): CallResult<Address> {
+    let result = super.tryCall("pot", []);
+    if (result.reverted) {
+      return new CallResult();
+    }
+    let value = result.value;
+    return CallResult.fromValue(value[0].toAddress());
   }
 
   getTotalUserBalance(): BigInt {
@@ -269,19 +233,19 @@ export class Contract extends SmartContract {
     return CallResult.fromValue(value[0].toBigInt());
   }
 
-  isOwner(): boolean {
-    let result = super.call("isOwner", []);
+  getAdminAccountBalance(): BigInt {
+    let result = super.call("getAdminAccountBalance", []);
 
-    return result[0].toBoolean();
+    return result[0].toBigInt();
   }
 
-  try_isOwner(): CallResult<boolean> {
-    let result = super.tryCall("isOwner", []);
+  try_getAdminAccountBalance(): CallResult<BigInt> {
+    let result = super.tryCall("getAdminAccountBalance", []);
     if (result.reverted) {
       return new CallResult();
     }
     let value = result.value;
-    return CallResult.fromValue(value[0].toBoolean());
+    return CallResult.fromValue(value[0].toBigInt());
   }
 
   owner(): Address {
@@ -299,14 +263,82 @@ export class Contract extends SmartContract {
     return CallResult.fromValue(value[0].toAddress());
   }
 
-  pot(): Address {
-    let result = super.call("pot", []);
+  isOwner(): boolean {
+    let result = super.call("isOwner", []);
+
+    return result[0].toBoolean();
+  }
+
+  try_isOwner(): CallResult<boolean> {
+    let result = super.tryCall("isOwner", []);
+    if (result.reverted) {
+      return new CallResult();
+    }
+    let value = result.value;
+    return CallResult.fromValue(value[0].toBoolean());
+  }
+
+  getAccountBalance(_address: Address): BigInt {
+    let result = super.call("getAccountBalance", [
+      EthereumValue.fromAddress(_address)
+    ]);
+
+    return result[0].toBigInt();
+  }
+
+  try_getAccountBalance(_address: Address): CallResult<BigInt> {
+    let result = super.tryCall("getAccountBalance", [
+      EthereumValue.fromAddress(_address)
+    ]);
+    if (result.reverted) {
+      return new CallResult();
+    }
+    let value = result.value;
+    return CallResult.fromValue(value[0].toBigInt());
+  }
+
+  getFutureTimestamp(_duration: BigInt): BigInt {
+    let result = super.call("getFutureTimestamp", [
+      EthereumValue.fromUnsignedBigInt(_duration)
+    ]);
+
+    return result[0].toBigInt();
+  }
+
+  try_getFutureTimestamp(_duration: BigInt): CallResult<BigInt> {
+    let result = super.tryCall("getFutureTimestamp", [
+      EthereumValue.fromUnsignedBigInt(_duration)
+    ]);
+    if (result.reverted) {
+      return new CallResult();
+    }
+    let value = result.value;
+    return CallResult.fromValue(value[0].toBigInt());
+  }
+
+  balance(): BigInt {
+    let result = super.call("balance", []);
+
+    return result[0].toBigInt();
+  }
+
+  try_balance(): CallResult<BigInt> {
+    let result = super.tryCall("balance", []);
+    if (result.reverted) {
+      return new CallResult();
+    }
+    let value = result.value;
+    return CallResult.fromValue(value[0].toBigInt());
+  }
+
+  daiToken(): Address {
+    let result = super.call("daiToken", []);
 
     return result[0].toAddress();
   }
 
-  try_pot(): CallResult<Address> {
-    let result = super.tryCall("pot", []);
+  try_daiToken(): CallResult<Address> {
+    let result = super.tryCall("daiToken", []);
     if (result.reverted) {
       return new CallResult();
     }
@@ -314,14 +346,14 @@ export class Contract extends SmartContract {
     return CallResult.fromValue(value[0].toAddress());
   }
 
-  vat(): Address {
-    let result = super.call("vat", []);
+  daiJoin(): Address {
+    let result = super.call("daiJoin", []);
 
     return result[0].toAddress();
   }
 
-  try_vat(): CallResult<Address> {
-    let result = super.tryCall("vat", []);
+  try_daiJoin(): CallResult<Address> {
+    let result = super.tryCall("daiJoin", []);
     if (result.reverted) {
       return new CallResult();
     }
@@ -330,36 +362,84 @@ export class Contract extends SmartContract {
   }
 }
 
-export class BookListingCall extends EthereumCall {
-  get inputs(): BookListingCall__Inputs {
-    return new BookListingCall__Inputs(this);
+export class SetSecondsPerBlockCall extends EthereumCall {
+  get inputs(): SetSecondsPerBlockCall__Inputs {
+    return new SetSecondsPerBlockCall__Inputs(this);
   }
 
-  get outputs(): BookListingCall__Outputs {
-    return new BookListingCall__Outputs(this);
+  get outputs(): SetSecondsPerBlockCall__Outputs {
+    return new SetSecondsPerBlockCall__Outputs(this);
   }
 }
 
-export class BookListingCall__Inputs {
-  _call: BookListingCall;
+export class SetSecondsPerBlockCall__Inputs {
+  _call: SetSecondsPerBlockCall;
 
-  constructor(call: BookListingCall) {
+  constructor(call: SetSecondsPerBlockCall) {
     this._call = call;
   }
 
-  get _id(): BigInt {
+  get _seconds(): BigInt {
     return this._call.inputValues[0].value.toBigInt();
-  }
-
-  get _duration(): BigInt {
-    return this._call.inputValues[1].value.toBigInt();
   }
 }
 
-export class BookListingCall__Outputs {
-  _call: BookListingCall;
+export class SetSecondsPerBlockCall__Outputs {
+  _call: SetSecondsPerBlockCall;
 
-  constructor(call: BookListingCall) {
+  constructor(call: SetSecondsPerBlockCall) {
+    this._call = call;
+  }
+}
+
+export class CreateVoteCall extends EthereumCall {
+  get inputs(): CreateVoteCall__Inputs {
+    return new CreateVoteCall__Inputs(this);
+  }
+
+  get outputs(): CreateVoteCall__Outputs {
+    return new CreateVoteCall__Outputs(this);
+  }
+}
+
+export class CreateVoteCall__Inputs {
+  _call: CreateVoteCall;
+
+  constructor(call: CreateVoteCall) {
+    this._call = call;
+  }
+}
+
+export class CreateVoteCall__Outputs {
+  _call: CreateVoteCall;
+
+  constructor(call: CreateVoteCall) {
+    this._call = call;
+  }
+}
+
+export class RenounceOwnershipCall extends EthereumCall {
+  get inputs(): RenounceOwnershipCall__Inputs {
+    return new RenounceOwnershipCall__Inputs(this);
+  }
+
+  get outputs(): RenounceOwnershipCall__Outputs {
+    return new RenounceOwnershipCall__Outputs(this);
+  }
+}
+
+export class RenounceOwnershipCall__Inputs {
+  _call: RenounceOwnershipCall;
+
+  constructor(call: RenounceOwnershipCall) {
+    this._call = call;
+  }
+}
+
+export class RenounceOwnershipCall__Outputs {
+  _call: RenounceOwnershipCall;
+
+  constructor(call: RenounceOwnershipCall) {
     this._call = call;
   }
 }
@@ -398,28 +478,66 @@ export class CreateListingCall__Outputs {
   }
 }
 
-export class CreateVoteCall extends EthereumCall {
-  get inputs(): CreateVoteCall__Inputs {
-    return new CreateVoteCall__Inputs(this);
+export class TransferOwnershipCall extends EthereumCall {
+  get inputs(): TransferOwnershipCall__Inputs {
+    return new TransferOwnershipCall__Inputs(this);
   }
 
-  get outputs(): CreateVoteCall__Outputs {
-    return new CreateVoteCall__Outputs(this);
+  get outputs(): TransferOwnershipCall__Outputs {
+    return new TransferOwnershipCall__Outputs(this);
   }
 }
 
-export class CreateVoteCall__Inputs {
-  _call: CreateVoteCall;
+export class TransferOwnershipCall__Inputs {
+  _call: TransferOwnershipCall;
 
-  constructor(call: CreateVoteCall) {
+  constructor(call: TransferOwnershipCall) {
+    this._call = call;
+  }
+
+  get newOwner(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+}
+
+export class TransferOwnershipCall__Outputs {
+  _call: TransferOwnershipCall;
+
+  constructor(call: TransferOwnershipCall) {
     this._call = call;
   }
 }
 
-export class CreateVoteCall__Outputs {
-  _call: CreateVoteCall;
+export class BookListingCall extends EthereumCall {
+  get inputs(): BookListingCall__Inputs {
+    return new BookListingCall__Inputs(this);
+  }
 
-  constructor(call: CreateVoteCall) {
+  get outputs(): BookListingCall__Outputs {
+    return new BookListingCall__Outputs(this);
+  }
+}
+
+export class BookListingCall__Inputs {
+  _call: BookListingCall;
+
+  constructor(call: BookListingCall) {
+    this._call = call;
+  }
+
+  get _id(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+
+  get _duration(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+}
+
+export class BookListingCall__Outputs {
+  _call: BookListingCall;
+
+  constructor(call: BookListingCall) {
     this._call = call;
   }
 }
@@ -450,92 +568,6 @@ export class EndListingCall__Outputs {
   _call: EndListingCall;
 
   constructor(call: EndListingCall) {
-    this._call = call;
-  }
-}
-
-export class RenounceOwnershipCall extends EthereumCall {
-  get inputs(): RenounceOwnershipCall__Inputs {
-    return new RenounceOwnershipCall__Inputs(this);
-  }
-
-  get outputs(): RenounceOwnershipCall__Outputs {
-    return new RenounceOwnershipCall__Outputs(this);
-  }
-}
-
-export class RenounceOwnershipCall__Inputs {
-  _call: RenounceOwnershipCall;
-
-  constructor(call: RenounceOwnershipCall) {
-    this._call = call;
-  }
-}
-
-export class RenounceOwnershipCall__Outputs {
-  _call: RenounceOwnershipCall;
-
-  constructor(call: RenounceOwnershipCall) {
-    this._call = call;
-  }
-}
-
-export class SetSecondsPerBlockCall extends EthereumCall {
-  get inputs(): SetSecondsPerBlockCall__Inputs {
-    return new SetSecondsPerBlockCall__Inputs(this);
-  }
-
-  get outputs(): SetSecondsPerBlockCall__Outputs {
-    return new SetSecondsPerBlockCall__Outputs(this);
-  }
-}
-
-export class SetSecondsPerBlockCall__Inputs {
-  _call: SetSecondsPerBlockCall;
-
-  constructor(call: SetSecondsPerBlockCall) {
-    this._call = call;
-  }
-
-  get _seconds(): BigInt {
-    return this._call.inputValues[0].value.toBigInt();
-  }
-}
-
-export class SetSecondsPerBlockCall__Outputs {
-  _call: SetSecondsPerBlockCall;
-
-  constructor(call: SetSecondsPerBlockCall) {
-    this._call = call;
-  }
-}
-
-export class TransferOwnershipCall extends EthereumCall {
-  get inputs(): TransferOwnershipCall__Inputs {
-    return new TransferOwnershipCall__Inputs(this);
-  }
-
-  get outputs(): TransferOwnershipCall__Outputs {
-    return new TransferOwnershipCall__Outputs(this);
-  }
-}
-
-export class TransferOwnershipCall__Inputs {
-  _call: TransferOwnershipCall;
-
-  constructor(call: TransferOwnershipCall) {
-    this._call = call;
-  }
-
-  get newOwner(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-}
-
-export class TransferOwnershipCall__Outputs {
-  _call: TransferOwnershipCall;
-
-  constructor(call: TransferOwnershipCall) {
     this._call = call;
   }
 }

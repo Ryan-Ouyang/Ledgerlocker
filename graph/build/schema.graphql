@@ -1,4 +1,9 @@
 type Listing @entity {
   id: ID!
   listingId: BigInt!
+  price: BigInt
+  timestamp: BigInt
+  renter: Bytes
+  owner: Bytes
+  eventType: String!
 }

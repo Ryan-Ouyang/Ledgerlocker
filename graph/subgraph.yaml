@@ -6,9 +6,9 @@ dataSources:
     name: Contract
     network: kovan
     source:
-      address: "0xb3f0B6082eEc590F43056C1876b0413cf46a546A"
+      address: "0xE6023B2DaA371AB5fda43E12C4b2BbB86C0955f6"
       abi: Contract
-      startBlock: 16787422
+      startBlock: 16789422
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
@@ -21,8 +21,8 @@ dataSources:
         - name: Contract
           file: ./abis/Contract.json
       eventHandlers:
-        - event: listingBooked(uint256)
+        - event: listingBooked(uint256,uint256,uint256,address,address)
           handler: handlelistingBooked
-        - event: listingClosed(uint256)
+        - event: listingClosed(uint256,uint256,uint256,address,address)
           handler: handlelistingClosed
       file: ./src/mapping.ts

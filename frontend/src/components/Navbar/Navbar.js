@@ -22,9 +22,12 @@ export default function Navbar(props) {
       <Link className="navbar-item" to="/search">
         Search
       </Link>
+      <Link className="navbar-item" to="/owner">
+        Owner Portal
+      </Link>
       <div className="navbar-end">
         <div className="navbar-item">
-          <p>{props.addr}</p>
+          <p>{props.addr ? "Welcome, " + props.addr : ""}</p>
         </div>
         <Link className="navbar-item" to="/profile">
           <img src={profileImage} className="profile-img" />

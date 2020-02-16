@@ -20,6 +20,7 @@ export function handlelistingBooked(event: listingBooked): void {
   }
 
   // Entity fields can be set based on event parameters
+  entity.id = event.transaction.hash.toHex() + "-" + event.logIndex.toString();
   entity.listingId = event.params._id;
   entity.price = event.params._price;
   entity.booked = event.params._booked;
@@ -38,6 +39,7 @@ export function handlelistingClosed(event: listingClosed): void {
     entity = new Listing(event.transaction.from.toHex());
   }
 
+  entity.id = event.transaction.hash.toHex() + "-" + event.logIndex.toString();
   entity.listingId = event.params._id;
   entity.price = event.params._price;
   entity.booked = event.params._booked;
@@ -55,6 +57,7 @@ export function handlelistingCreated(event: listingCreated): void {
     entity = new Listing(event.transaction.from.toHex());
   }
 
+  entity.id = event.transaction.hash.toHex() + "-" + event.logIndex.toString();
   entity.listingId = event.params._id;
   entity.price = event.params._price;
   entity.booked = event.params._booked;

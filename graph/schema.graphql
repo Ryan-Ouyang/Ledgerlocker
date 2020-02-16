@@ -3,7 +3,7 @@ type Listing @entity {
   listingId: BigInt!
   price: BigInt
   booked: Boolean
-  renter: Bytes
-  owner: Bytes
+  renter: String
+  owner: String
   eventType: String!
 }

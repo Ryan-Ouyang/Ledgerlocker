@@ -77,37 +77,37 @@ export class Listing extends Entity {
     this.set("booked", Value.fromBoolean(value));
   }
 
-  get renter(): Bytes | null {
+  get renter(): string | null {
     let value = this.get("renter");
     if (value === null) {
       return null;
     } else {
-      return value.toBytes();
+      return value.toString();
     }
   }
 
-  set renter(value: Bytes | null) {
+  set renter(value: string | null) {
     if (value === null) {
       this.unset("renter");
     } else {
-      this.set("renter", Value.fromBytes(value as Bytes));
+      this.set("renter", Value.fromString(value as string));
     }
   }
 
-  get owner(): Bytes | null {
+  get owner(): string | null {
     let value = this.get("owner");
     if (value === null) {
       return null;
     } else {
-      return value.toBytes();
+      return value.toString();
     }
   }
 
-  set owner(value: Bytes | null) {
+  set owner(value: string | null) {
     if (value === null) {
       this.unset("owner");
     } else {
-      this.set("owner", Value.fromBytes(value as Bytes));
+      this.set("owner", Value.fromString(value as string));
     }
   }
 

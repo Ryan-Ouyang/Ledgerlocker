@@ -1,4 +1,4 @@
-import { BigInt } from "@graphprotocol/graph-ts";
+import { BigInt, Bytes, Value } from "@graphprotocol/graph-ts";
 import {
   Contract,
   listingBooked,
@@ -24,8 +24,8 @@ export function handlelistingBooked(event: listingBooked): void {
   entity.listingId = event.params._id;
   entity.price = event.params._price;
   entity.booked = event.params._booked;
-  entity.renter = event.params._renter;
-  entity.owner = event.params._owner;
+  entity.renter = event.params._renter.toString();
+  entity.owner = "0xd02b00EFd6E38d7735C7b1793edD6379E8BF5efB";
   entity.eventType = "booking";
 
   // Entities can be written to the store with `.save()`
@@ -43,8 +43,8 @@ export function handlelistingClosed(event: listingClosed): void {
   entity.listingId = event.params._id;
   entity.price = event.params._price;
   entity.booked = event.params._booked;
-  entity.renter = event.params._renter;
-  entity.owner = event.params._owner;
+  entity.renter = event.params._renter.toString();
+  entity.owner = "0xd02b00EFd6E38d7735C7b1793edD6379E8BF5efB";
   entity.eventType = "closing";
 
   entity.save();
@@ -61,8 +61,8 @@ export function handlelistingCreated(event: listingCreated): void {
   entity.listingId = event.params._id;
   entity.price = event.params._price;
   entity.booked = event.params._booked;
-  entity.renter = event.params._renter;
-  entity.owner = event.params._owner;
+  entity.renter = event.params._renter.toString();
+  entity.owner = "0xd02b00EFd6E38d7735C7b1793edD6379E8BF5efB";
   entity.eventType = "creating";
 
   entity.save();

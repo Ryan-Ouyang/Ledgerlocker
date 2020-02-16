@@ -35,7 +35,7 @@ export default function MainListing(props) {
   }
 
   const handleDurationChange = e => {
-    setDuration(e.currentTarget.value);
+    setDuration(parseInt(e.currentTarget.value, 10) * 60 * 60 * 24);
   };
 
   return (
@@ -87,12 +87,13 @@ export default function MainListing(props) {
               From: <input type="date" id="from-input" />
               <br />
               {/* To: <input type="date" id="to-input"/> */}
-              Duration:{" "}
+              Duration:
               <input
                 type="text"
                 onChange={handleDurationChange}
                 id="duration-input"
-              />
+              />{" "}
+              days
             </p>
             <button className="button" onClick={() => handleBooking()}>
               Book!

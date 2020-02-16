@@ -1,6 +1,7 @@
 .mainDiv{
     height: 100vh;
     padding-top: 15vh;
+    word-wrap: break-word;
 }
 
 .mainTitle{
@@ -8,5 +9,5 @@
 }
 
 .bigText{
-    font-size: 20vh;
+    font-size: 16vh;
 }

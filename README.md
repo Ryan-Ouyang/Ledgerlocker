@@ -23,7 +23,9 @@ With the current DSR of **7.5%**, and an assumption that the current balance wil
 
 $82,978 * 0.075 / 12 = **$518.61** that could be potentially earned by the ETHDenver team.
 
-That's 25.9 **B IS FOR BUFFICORN** Books!!
+That's 26 **B IS FOR BUFFICORN** Books!!
+
+<img src="readme/Why-Cant-I-Hold-All-These-Limes.jpg" width="300">
 
 ### Buyer / Seller Marketplace
 

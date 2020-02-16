@@ -16,23 +16,29 @@ export default function Dashboard() {
 
   const instance = new web3.eth.Contract(contractABI, contractAddr);
   console.log("Contract instantiated");
-  instance.methods
-    .balance()
-    .call()
-    .then(response => setBalance(response));
-  setInterval(
+
+  setInterval(function () {
     instance.methods
       .getAdminAccountBalance()
       .call()
-      .then(response => setAdminBalance(response)),
-    5000
-  );
+      .then(response => setAdminBalance(response));
+  }, 5000);
+
+  setInterval(function () {
+    instance.methods
+      .balance()
+      .call()
+      .then(response => setBalance(response));
+  }, 5000);
+
 
   return (
     <div>
       <div className="mainDiv has-text-centered">
         <h1 className="mainTitle">Your interest</h1>
-        <h1 className="bigText">{adminBalance}</h1>
+        <h1 className="bigText">${web3.utils.fromWei(adminBalance.toString(), 'ether')}</h1>
+        <h1 className="mainTitle">Your contract balance</h1>
+        <h1 className="bigText">${web3.utils.fromWei(balance.toString(), 'ether')}</h1>
       </div>
       <ParticlesBg type="polygon" bg={true} />
     </div>

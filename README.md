@@ -80,3 +80,6 @@ For the proof of concept, we built a working door (with open AND close functiona
 
 ![Front picture](readme/back.jpg)
 
+# Front End
+
+![Frontend](readme/Frontend.png)

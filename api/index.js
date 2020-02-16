@@ -1,55 +1,99 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-
+const { request } = require("graphql-request");
 var server = require("http").createServer(app);
 var io = require("socket.io")(server);
+
+const graphQLQuery = `{
+  listings {
+    id
+    listingId
+    price
+    timestamp
+    renter
+    owner
+    eventType
+  }
+}
+`;
 
 app.use(cors());
 app.use(express.json());
 
-var locked; //true for locked
-var doorClosed; //true for closed
+var locked;
+var doorClosed;
 
-io.on("connection", function (socket) {
-  console.log("Lock connected");
-  socket.on('postLock', function (value) {
+io.on("connection", function(socket) {
+  console.log("Lock connected. Sending new code...");
+  var val = Math.floor(1000 + Math.random() * 9000);
+  io.sockets.emit("idState", val);
+  console.log("Sent code ", val);
+
+  socket.on("postLock", function(value) {
     console.log("Lock: " + value);
-    locked = value;
+    locked = value; //locked or unlocked
   });
-  socket.on('postDoor', function (value) {
+
+  socket.on("postDoor", function(value) {
     console.log("Door: " + value);
-    doorClosed = value;
+    doorClosed = value; // closed or open
   });
-  socket.on('disconnect', function () {
-    console.log('Lock disconnected');
+
+  socket.on("disconnect", function() {
+    console.log("Lock disconnected");
   });
 });
 
-app.post("/api/unlock/", function (req, res) {
+app.post("/api/unlock/", function(req, res) {
   if (locked === "locked") {
     io.sockets.emit("lockState", "unlock");
-    res.send(200);
+    res.sendStatus(200);
   }
 });
 
-app.post("/api/lock/", function (req, res) {
+app.post("/api/lock/", function(req, res) {
   if (locked === "unlocked") {
     io.sockets.emit("lockState", "lock");
-    res.send(200);
+    res.sendStatus(200);
   }
 });
 
-app.post("/api/changeID", function (req, res) {
+app.post("/api/changeID", function(req, res) {
   io.sockets.emit("idState", req.body.id);
-  res.send(200);
+  res.sendStatus(200);
 });
 
-app.get("/api/listings", function (req, res) {
+app.post("/api/checkin", function(req, res) {
+  res.sendStatus(200);
+});
+
+app.post("/api/checkout", function(req, res) {
+  res.sendStatus(200);
+});
+
+app.get("/api/listings/booked", async function(req, res) {
+  var data = await request(
+    "https://api.thegraph.com/subgraphs/name/haardikk21/ledgerlocker",
+    graphQLQuery
+  );
+
+  var listings = [];
+
+  data.listings.forEach(listing => {
+    if (listing.eventType === "booking") {
+      listings.push(listing);
+    }
+  });
+
+  res.json(listings);
+});
+
+app.get("/api/listings", function(req, res) {
   const listings = [
     {
       name: "Lovely Micro-Studio in Forest Park, GA",
-      key: 1,
+      id: 1,
       address: "Forest Park, GA",
       rent: "45 DAI/day",
       stake: 2,
@@ -68,7 +112,7 @@ app.get("/api/listings", function (req, res) {
     },
     {
       name: "Cosy Apartment in Denver, CO",
-      key: 2,
+      id: 2,
       address: "Denver, CO",
       rent: "50 DAI/day",
       stake: 2,

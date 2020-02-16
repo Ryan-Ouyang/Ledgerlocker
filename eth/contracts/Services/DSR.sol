@@ -1,8 +1,10 @@
 // https://github.com/makerdao/developerguides/blob/master/dai/dsr-integration-guide/dsr.sol
+pragma solidity ^0.5.0;
 
 contract PotLike {
     function chi() external view returns (uint256);
-    function rho() external returns (uint256);
+    function dsr() external view returns (uint256);
+    function rho() external view returns (uint256);
     function drip() external returns (uint256);
     function join(uint256) external;
     function exit(uint256) external;
@@ -50,7 +52,6 @@ contract DSR {
     }
 
     constructor() public {
-
         vat.hope(address(0x5AA71a3ae1C0bd6ac27A1f28e1415fFFB6F15B8c));
         vat.hope(address(0xEA190DBDC7adF265260ec4dA6e9675Fd4f5A78bb));
 
@@ -59,7 +60,7 @@ contract DSR {
 
     function _join(uint wad) internal {
         uint chi = (now > pot.rho()) ? pot.drip() : pot.chi();
-        daiToken.transferFrom(msg.sender, address(this), wad);
+        // daiToken.transferFrom(msg.sender, address(this), wad);
         daiJoin.join(address(this), wad);
         pot.join(mul(wad, RAY) / chi);
     }
@@ -76,9 +77,44 @@ contract DSR {
         daiJoin.exit(msg.sender, daiJoin.vat().dai(address(this)) / RAY);
     }
 
+    uint256 constant ONE = 10 ** 27;
+
+    function rmul(uint x, uint y) internal pure returns (uint z) {
+        z = mul(x, y) / ONE;
+    }
+    
+    function rpow(uint x, uint n, uint base) internal pure returns (uint z) {
+        assembly {
+            switch x case 0 {switch n case 0 {z := base} default {z := 0}}
+            default {
+                switch mod(n, 2) case 0 { z := base } default { z := x }
+                let half := div(base, 2)  // for rounding.
+                for { n := div(n, 2) } n { n := div(n,2) } {
+                    let xx := mul(x, x)
+                    if iszero(eq(div(xx, x), x)) { revert(0,0) }
+                    let xxRound := add(xx, half)
+                    if lt(xxRound, xx) { revert(0,0) }
+                    x := div(xxRound, base)
+                    if mod(n,2) {
+                        let zx := mul(z, x)
+                        if and(iszero(iszero(x)), iszero(eq(div(zx, x), z))) { revert(0,0) }
+                        let zxRound := add(zx, half)
+                        if lt(zxRound, zx) { revert(0,0) }
+                        z := div(zxRound, base)
+                    }
+                }
+            }
+        }
+    }
+    
     function balance() public view returns (uint256) {
        uint256 pie = pot.pie(address(this)); 
        uint256 chi = pot.chi();
-       return pie * chi / RAY;
+       
+       // DRIP
+       uint256 rho = pot.rho();
+       uint256 tmp = rmul(rpow(pot.dsr(), now - rho, ONE), chi);
+
+       return pie * tmp / RAY;
     }
 }

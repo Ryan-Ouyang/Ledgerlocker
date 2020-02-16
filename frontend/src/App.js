@@ -1,54 +1,34 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Fortmatic from "fortmatic";
 import Web3 from "web3";
 import Box from "3box";
 import axios from "axios";
 
+import contractABI from "./abis/contract";
+import daiContractABI from "./abis/dai";
+
 import "bulma/css/bulma.css";
 import "./App.css";
-import profileImage from "./assets/johndoe.png";
 
 import MainListing from "./components/MainListing/MainListing";
 import Bookings from "./components/Bookings/Bookings";
+import Owner from "./components/Owner/Owner";
+import Navbar from "./components/Navbar/Navbar";
 
-const fm = new Fortmatic("pk_test_C0C9ADE8AD6C86A9");
+const fm = new Fortmatic("pk_test_C0C9ADE8AD6C86A9", "kovan");
 let web3 = new Web3(fm.getProvider());
+
+const contractAddr = "0xE6023B2DaA371AB5fda43E12C4b2BbB86C0955f6";
+const daiContractAddr = "0x4f96fe3b7a6cf9725f59d353f723c1bdb64ca6aa";
 
 // let addr = "";
 let box;
 
 export default function App() {
-	const [listings, setListings] = useState([]);
-	const [addr, setAddr] = useState("");
-
-	useEffect(() => {
-		const fetchListings = async () => {
-			const result = await axios("http://localhost:3001/api/listings");
-			setListings(result.data);
-			console.log("Fetched listings");
-		};
-
-		const loginUser = async () => {
-			web3.eth.getAccounts().then(async address => {
-				setAddr(address[0]);
-				// addr = address[0]
-				console.log("Address: ", address[0]);
-				await open3Box(address[0]);
-				await set3BoxData("testing", "value");
-				await get3BoxData("testing");
-				await remove3BoxData("testing");
-			});
-		};
-
-		fetchListings();
-		loginUser();
-	}, []);
-
 	return (
 		<Router>
 			<div>
-				<Navbar addr={addr} />
 				{/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
 				<Switch>
@@ -56,7 +36,7 @@ export default function App() {
 						<LockControls />
 					</Route>
 					<Route exact path="/">
-						<Home listings={listings} addr={addr} />
+						<Home />
 					</Route>
 					<Route path="/listings">
 						<Listings />
@@ -67,6 +47,9 @@ export default function App() {
 					<Route path="/profile">
 						<Profile />
 					</Route>
+					<Route path="/owner">
+						<Owner />
+					</Route>
 				</Switch>
 			</div>
 		</Router>
@@ -74,28 +57,85 @@ export default function App() {
 }
 
 function Home(props) {
+	const [listings, setListings] = useState([]);
+	const [addr, setAddr] = useState("");
+	const [contract, setContract] = useState();
+	const [daiContract, setDaiContract] = useState();
+
+	useEffect(() => {
+		const loginUser = async () => {
+			web3.eth.getAccounts().then(async address => {
+				setAddr(address[0]);
+				// addr = address[0]
+				console.log("Address: ", address[0]);
+				await open3Box(address[0]);
+				await set3BoxData("testing", "value");
+				await get3BoxData("testing");
+				await remove3BoxData("testing");
+				web3.eth.defaultAccount = `${address[0]}`;
+			});
+		};
+
+		loginUser();
+	}, []);
+
+	useEffect(() => {
+		const fetchListings = async () => {
+			const result = await axios("http://localhost:3001/api/listings");
+			setListings(result.data);
+			console.log("Fetched listings");
+		};
+
+		const instantiateContracts = async () => {
+			const instance = new web3.eth.Contract(contractABI, contractAddr);
+			setContract(instance);
+			console.log("Contract instantiated");
+			const daiInstance = new web3.eth.Contract(
+				daiContractABI,
+				daiContractAddr
+			);
+			console.log("DAI Contract instantiated");
+			setDaiContract(daiInstance);
+		};
+
+		fetchListings();
+		instantiateContracts();
+	}, []);
+
 	const leftColumnListings = [];
 	const rightColumnListings = [];
 
 	// For flowing two columns
-	for (let i = 0; i < props.listings.length; i += 2) {
-		leftColumnListings.push(props.listings[i]);
-		rightColumnListings.push(props.listings[i + 1]);
+	for (let i = 0; i < listings.length; i += 2) {
+		leftColumnListings.push(listings[i]);
+		rightColumnListings.push(listings[i + 1]);
 	}
 
 	return (
 		<>
-
+			<Navbar addr={addr} />
 			<div className="container home-container">
 				<div className="columns">
 					<div className="column">
 						{leftColumnListings.map((l, i) => (
-							<MainListing key={i} listing={l}></MainListing>
+							<MainListing
+								key={i}
+								listing={l}
+								contract={contract}
+								daiContract={daiContract}
+								addr={addr}
+							></MainListing>
 						))}
 					</div>
 					<div className="column">
 						{rightColumnListings.map((l, i) => (
-							<MainListing key={i} listing={l}></MainListing>
+							<MainListing
+								key={i}
+								listing={l}
+								contract={contract}
+								daiContract={daiContract}
+								addr={addr}
+							></MainListing>
 						))}
 					</div>
 				</div>
@@ -119,41 +159,6 @@ function LockControls() {
 			<button>Unlock</button>
 			<button>Lock</button>
 		</section>
-	);
-}
-
-function Navbar(props) {
-	return (
-		<nav
-			className="navbar is-light"
-			role="navigation"
-			aria-label="main navigation"
-		>
-			<a className="navbar-item" href="https://bulma.io">
-				<img
-					src="https://bulma.io/images/bulma-logo.png"
-					width="112"
-					height="28"
-				></img>
-			</a>
-			<Link className="navbar-item" to="/">
-				Home
-			</Link>
-			<Link className="navbar-item" to="/search">
-				Search
-			</Link>
-			<Link className="navbar-item" to="/bookings">
-				Bookings
-			</Link>
-			<div className="navbar-end">
-				<div className="navbar-item">
-					<p>{props.addr}</p>
-				</div>
-				<Link className="navbar-item" to="/profile">
-					<img src={profileImage} className="profile-img" />
-				</Link>
-			</div>
-		</nav>
 	);
 }
 

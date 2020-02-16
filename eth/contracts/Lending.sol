@@ -11,6 +11,14 @@ contract Lending is Account, DSR {
     // DAI ERC20 Smart Contract 
     IERC20 daiContract = IERC20(address(0x4F96Fe3b7A6Cf9725f59d353F723c1bDb64CA6Aa));
 
+    function getAdminAccountBalance() public view returns (uint256) {
+        
+        // Get total DAI available to be redeemed from DSR
+        uint256 balance = balance();
+        
+        return balance - totalUserBalance; 
+    }
+    
     function withdraw() internal returns (uint256) {
         uint256 totalBalance = _withdraw();
         

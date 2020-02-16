@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 
 export default function MainListing(props) {
 	const [isModalVisible, setModalVisible] = useState(false);
+	const [duration, setDuration] = useState(86400);
 
 	var settings = {
 		dots: true,
@@ -13,6 +14,17 @@ export default function MainListing(props) {
 		slidesToScroll: 1,
 		slidesToShow: 1
 	};
+
+	function handleBooking() {
+		console.log(`Sending from ${props.addr} to ${props.contract._address} with dai ${props.daiContract._address}`)
+		props.daiContract.methods.approve(props.contract._address, "-1").send({from: props.addr})
+			.then(props.contract.methods.bookListing(props.listing.id, duration).send({from: props.addr, gas: 500000}))
+			.then(console.log(`Booked listing with id: ${props.listing.id} and duration ${duration}`))
+	}
+
+	const handleDurationChange = (e) => {
+		setDuration(e.currentTarget.value);
+	}
 
 	return (
 		<div>
@@ -61,10 +73,12 @@ export default function MainListing(props) {
 							<br />
 							Stake Amount: {props.listing.stake + "x"}
 							<br />
-							From: <input type="date" />
+							From: <input type="date" id="from-input"/>
 							<br />
-							To: <input type="date" />
+							{/* To: <input type="date" id="to-input"/> */}
+							Duration: <input type="text" onChange={handleDurationChange} id="duration-input"/>
 						</p>
+						<button className="button" onClick={() => handleBooking()}>Book!</button>
 					</section>
 				</div>
 				<button

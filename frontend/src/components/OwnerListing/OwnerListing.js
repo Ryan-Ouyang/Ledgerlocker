@@ -22,6 +22,7 @@ export default function MainListing(props) {
         <h2 className="subtitle">
           {props.listing.address} - {props.listing.rent}
         </h2>
+
         {props.listing.booked && (
           <h2 className="subtitle has-text-info">Booked!</h2>
         )}

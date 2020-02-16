@@ -22,6 +22,12 @@ export default function MainListing(props) {
         <h2 className="subtitle">
           {props.listing.address} - {props.listing.rent}
         </h2>
+        <button class="button is-primary">Lock</button>
+        {"  "}
+        <button class="button is-link">Unlock</button>
+        {"  "}
+        <button class="button is-success">Check Out</button>
+        <br />
         <img src={props.listing.images[0]}></img>
       </div>
 

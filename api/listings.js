@@ -8,7 +8,7 @@ var listings = {
     renter: "0x0000000000000000000000000000000000000000",
     stake: 2,
     created: false,
-    owner: "0xA5A4E75ED687E45deC203abB3b1a14516D1078D0",
+    owner: "0xd02b00EFd6E38d7735C7b1793edD6379E8BF5efB",
     description:
       "123 Broadway, Denver near ABC Mall. Walking score 95, with everything you can want within 5 minutes walking distance. House was just renovated and has hardwood floors, new kitchen appliances, and renovated bathrooms. A great place to call it your home!",
 
@@ -31,7 +31,7 @@ var listings = {
     renter: "0x0000000000000000000000000000000000000000",
     booked: false,
     stake: 2,
-    owner: "0xA5A4E75ED687E45deC203abB3b1a14516D1078D0",
+    owner: "0xd02b00EFd6E38d7735C7b1793edD6379E8BF5efB",
     description:
       "Prepare to be charmed by the exposed brickwork and quirky decor of this lovely historic home that once sheltered horses in the late 1800s. It's been featured in Architectural Digest online as Colorado's most unique and beautiful Airbnb property.",
     images: [
@@ -51,7 +51,7 @@ var listings = {
     renter: "0x0000000000000000000000000000000000000000",
     booked: false,
     stake: 2,
-    owner: "0xA5A4E75ED687E45deC203abB3b1a14516D1078D0",
+    owner: "0xd02b00EFd6E38d7735C7b1793edD6379E8BF5efB",
     description:
       "Beautiful basement apartment in 1890 Victorian home. Just added brand new furniture in living room. Enter through a courtyard with Koi pond. Walking distance to everything; Ogden, Fillmore, Bluebird, 16th st mall, nightlife, restaurants, min. from Denver Pavilion. Kitchen Bike Rental Hot Tub Laundry. Includes one off-street parking spot for guests. We do get booked in advance so book now!",
     images: [
@@ -71,7 +71,7 @@ var listings = {
     created: false,
     booked: false,
     stake: 2,
-    owner: "0xA5A4E75ED687E45deC203abB3b1a14516D1078D0",
+    owner: "0xd02b00EFd6E38d7735C7b1793edD6379E8BF5efB",
     description:
       "Private studio/loft 1 bedroom home in the Villa Park neighborhood adjacent to Downtown Denver. Perry Street Light Rail station is 2.5 blocks away. Less than 5 miles from either Union Station in the center of Denver or the Denver Federal Center in Lakewood, CO. Easily connect to I-70 for access to the mountains for skiing/hiking or just sightseeing. Feet away from running/bike trail that leads into Denver or minutes from Sloan’s Lake for running/biking/boating.",
     images: [
@@ -89,7 +89,7 @@ var listings = {
     renter: "0x0000000000000000000000000000000000000000",
     booked: false,
     stake: 2,
-    owner: "0xA5A4E75ED687E45deC203abB3b1a14516D1078D0",
+    owner: "0xd02b00EFd6E38d7735C7b1793edD6379E8BF5efB",
     description:
       "Close to everything Denver has to offer—easy access to Colorado's beautiful mountains and thriving downtown! Private studio guesthouse with designated off-street parking located on South Broadway in a quiet neighborhood near downtown Englewood. 10 minute drive to downtown Denver. Close to the Gothic Theater, Red Rocks, bars, restaurants, dispensaries, hiking and the light rail. We are 420 friendly. There is 1 queen bed and 1 sofa bed. Not a full kitchen—but has mini fridge and coffee maker.",
     images: [
@@ -109,7 +109,7 @@ var listings = {
     booked: false,
     created: false,
     stake: 2,
-    owner: "0xA5A4E75ED687E45deC203abB3b1a14516D1078D0",
+    owner: "0xd02b00EFd6E38d7735C7b1793edD6379E8BF5efB",
     description:
       "An enjoyable home for your next visit to Denver. Enjoy mountain views, watch a movie on the home theater, or kick back in a secluded hot tub surrounded by pine trees. Located near Regis University, Tennyson Shopping District, Olde Towne Arvada, and Inspiration Point Park. Easy access to I-70 means just 25 minutes to the airport and 10 minutes to downtown Denver. We have an energetic 1.5 year old, you may hear some noises during the day, but night-time disturbances are few.",
     images: [
@@ -129,7 +129,7 @@ var listings = {
     created: false,
     booked: false,
     stake: 2,
-    owner: "0xA5A4E75ED687E45deC203abB3b1a14516D1078D0",
+    owner: "0xd02b00EFd6E38d7735C7b1793edD6379E8BF5efB",
     description:
       "Hip 3 Level space is in the middle of it ALL! Modern with a charming feel. Right by Coors, Union Station, fantastic restaurants, music whatever your heart desires. Enjoy the comforts of home and of the city of Denver. Check in can usually be 1pm but may not be cleaned until 5pm.",
     images: [
@@ -149,7 +149,7 @@ var listings = {
     created: false,
     stake: 2,
     renter: "0x0000000000000000000000000000000000000000",
-    owner: "0xA5A4E75ED687E45deC203abB3b1a14516D1078D0",
+    owner: "0xd02b00EFd6E38d7735C7b1793edD6379E8BF5efB",
     description:
       "Prepare to be charmed by the exposed brickwork and quirky decor of this lovely historic home that once sheltered horses in the late 1800s. It's been featured in Architectural Digest online as Colorado's most unique and beautiful Airbnb property.",
     images: [
@@ -169,7 +169,7 @@ var listings = {
     booked: false,
     renter: "0x0000000000000000000000000000000000000000",
     stake: 2,
-    owner: "0xA5A4E75ED687E45deC203abB3b1a14516D1078D0",
+    owner: "0xd02b00EFd6E38d7735C7b1793edD6379E8BF5efB",
     description:
       "Prepare to be charmed by the exposed brickwork and quirky decor of this lovely historic home that once sheltered horses in the late 1800s. It's been featured in Architectural Digest online as Colorado's most unique and beautiful Airbnb property.",
     images: [
@@ -189,7 +189,7 @@ var listings = {
     booked: false,
     stake: 2,
     renter: "0x0000000000000000000000000000000000000000",
-    owner: "0xA5A4E75ED687E45deC203abB3b1a14516D1078D0",
+    owner: "0xd02b00EFd6E38d7735C7b1793edD6379E8BF5efB",
     description:
       "Beautiful basement apartment in 1890 Victorian home. Just added brand new furniture in living room. Enter through a courtyard with Koi pond. Walking distance to everything; Ogden, Fillmore, Bluebird, 16th st mall, nightlife, restaurants, min. from Denver Pavilion. Kitchen Bike Rental Hot Tub Laundry. Includes one off-street parking spot for guests. We do get booked in advance so book now!",
     images: [

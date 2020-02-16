@@ -418,7 +418,7 @@ web3js = new web3(
 const createListing = (id, price) => {
   var contract = new web3js.eth.Contract(contractABI, contractAddress);
 
-  web3js.eth.getBalance("0xA5A4E75ED687E45deC203abB3b1a14516D1078D0", function(
+  web3js.eth.getBalance("0xA5A4E75ED687E45deC203abB3b1a14516D1078D0", function (
     err,
     result
   ) {
@@ -432,7 +432,7 @@ const createListing = (id, price) => {
   // FROM https://medium.com/coinmonks/ethereum-tutorial-sending-transaction-via-nodejs-backend-7b623b885707
   var count;
   // get transaction count, later will used as nonce
-  web3js.eth.getTransactionCount(address).then(function(v) {
+  web3js.eth.getTransactionCount(address).then(function (v) {
     console.log("Count: " + v);
     count = v;
     //creating raw tranaction
@@ -480,58 +480,58 @@ var locked;
 var doorClosed;
 var lockCode;
 
-io.on("connection", function(socket) {
+io.on("connection", function (socket) {
   console.log("Lock connected. Sending new code...");
   var val = Math.floor(1000 + Math.random() * 9000);
   lockCode = val;
   io.sockets.emit("idState", val);
   console.log("Sent code ", val);
 
-  socket.on("postLock", function(value) {
+  socket.on("postLock", function (value) {
     console.log("Lock: " + value);
     locked = value; //locked or unlocked
   });
 
-  socket.on("postDoor", function(value) {
+  socket.on("postDoor", function (value) {
     console.log("Door: " + value);
     doorClosed = value; // closed or open
   });
 
-  socket.on("disconnect", function() {
+  socket.on("disconnect", function () {
     console.log("Lock disconnected");
   });
 });
 
-app.post("/api/unlock/", function(req, res) {
-  if (locked === "locked" && doorClosed === "closed") {
+app.post("/api/unlock/", function (req, res) {
+  if (locked === "locked") {
     io.sockets.emit("lockState", "unlock");
     res.sendStatus(200);
   }
 });
 
-app.post("/api/lock/", function(req, res) {
+app.post("/api/lock/", function (req, res) {
   if (locked === "unlocked" && doorClosed === "closed") {
     io.sockets.emit("lockState", "lock");
     res.sendStatus(200);
   }
 });
 
-app.post("/api/changeID", function(req, res) {
+app.post("/api/changeID", function (req, res) {
   var val = Math.floor(1000 + Math.random() * 9000);
   lockCode = val;
   io.sockets.emit("idState", val);
   res.sendStatus(200);
 });
 
-app.post("/api/checkin", function(req, res) {
+app.post("/api/checkin", function (req, res) {
   res.sendStatus(200);
 });
 
-app.post("/api/checkout", function(req, res) {
+app.post("/api/checkout", function (req, res) {
   res.sendStatus(200);
 });
 
-app.get("/api/listings/booked", async function(req, res) {
+app.get("/api/listings/booked", async function (req, res) {
   var data = await request(
     "https://api.thegraph.com/subgraphs/name/haardikk21/ledgerlocker",
     graphQLQuery
@@ -548,7 +548,7 @@ app.get("/api/listings/booked", async function(req, res) {
   res.json(listings);
 });
 
-app.get("/api/listings", function(req, res) {
+app.get("/api/listings", function (req, res) {
   const listings = [
     {
       name: "Lovely Micro-Studio in Forest Park, GA",
@@ -679,10 +679,10 @@ app.get("/api/listings", function(req, res) {
     }
   ];
 
-  res.json(listings);
+  res.send(listings);
 });
 
-app.get("/api/createListing/:id/:price", async function(req, res) {
+app.get("/api/createListing/:id/:price", async function (req, res) {
   createListing(req.params.id, req.params.price);
 });
 

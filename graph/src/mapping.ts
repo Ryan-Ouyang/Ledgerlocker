@@ -24,7 +24,7 @@ export function handlelistingBooked(event: listingBooked): void {
   entity.listingId = event.params._id;
   entity.price = event.params._price;
   entity.booked = event.params._booked;
-  entity.renter = event.params._renter.toString();
+  entity.renter = event.params._renter.toHexString();
   entity.owner = "0xd02b00EFd6E38d7735C7b1793edD6379E8BF5efB";
   entity.eventType = "booking";
 
@@ -43,7 +43,7 @@ export function handlelistingClosed(event: listingClosed): void {
   entity.listingId = event.params._id;
   entity.price = event.params._price;
   entity.booked = event.params._booked;
-  entity.renter = event.params._renter.toString();
+  entity.renter = event.params._renter.toHexString();
   entity.owner = "0xd02b00EFd6E38d7735C7b1793edD6379E8BF5efB";
   entity.eventType = "closing";
 
@@ -61,7 +61,7 @@ export function handlelistingCreated(event: listingCreated): void {
   entity.listingId = event.params._id;
   entity.price = event.params._price;
   entity.booked = event.params._booked;
-  entity.renter = event.params._renter.toString();
+  entity.renter = event.params._renter.toHexString();
   entity.owner = "0xd02b00EFd6E38d7735C7b1793edD6379E8BF5efB";
   entity.eventType = "creating";
 

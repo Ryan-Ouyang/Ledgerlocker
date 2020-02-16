@@ -60,7 +60,6 @@ contract DSR {
 
     function _join(uint wad) internal {
         uint chi = (now > pot.rho()) ? pot.drip() : pot.chi();
-        // daiToken.transferFrom(msg.sender, address(this), wad);
         daiJoin.join(address(this), wad);
         pot.join(mul(wad, RAY) / chi);
     }
@@ -108,7 +107,7 @@ contract DSR {
     }
     
     // Gets the balance on the smart contract with interest
-    function balance() public view returns (uint256) {
+    function _DSRBalance() internal view returns (uint256) {
        uint256 pie = pot.pie(address(this)); 
        uint256 chi = pot.chi();
        

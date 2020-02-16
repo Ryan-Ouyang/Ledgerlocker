@@ -43,33 +43,32 @@ export default function MainListing(props) {
     slidesToShow: 1
   };
 
-  function handleBooking() {
-    console.log(
-      `Sending from ${props.addr} to ${props.contract._address} with dai ${props.daiContract._address}`
-    );
-    props.daiContract.methods
-      .approve(props.contract._address, "-1")
-      .send({ from: props.addr })
-      .then(
-        props.contract.methods
-          .bookListing(props.listing.id, duration)
-          .send({ from: props.addr, gas: 500000 })
-      )
-      .then(
-        // alert(
-        //   `Booked listing with id: ${props.listing.id} and duration ${duration}`
-        // )
-        console.log("trolling right?")
-      )
-      .then(set3BoxData("lockCode", "9786"))
-      .then(
-        axios.post("http://localhost:3001/api/book", {
-          id: props.listing.id,
-          renter: props.addr
-        })
-      )
-      .then(console.log("donezo"));
-  }
+	function handleBooking() {
+		console.log(
+			`Sending from ${props.addr} to ${props.contract._address} with dai ${props.daiContract._address}`
+		);
+		props.daiContract.methods
+			.approve(props.contract._address, "-1")
+			.send({ from: props.addr })
+			.then(
+				props.contract.methods
+					.bookListing(props.listing.id, duration)
+					.send({ from: props.addr, gas: 500000 })
+			)
+			.then(
+				console.log(
+				  `Booked listing with id: ${props.listing.id} and duration ${duration}`
+				)
+				// console.log("trolling right?")
+			)
+			.then(set3BoxData("lockCode", "9786"))
+			.then(
+				axios.post("http://localhost:3001/api/book", {
+					id: props.listing.id,
+					renter: props.addr
+				})
+			).then(console.log("donezo"));
+	}
 
   const handleDurationChange = e => {
     setDuration(parseInt(e.currentTarget.value, 10) * 60 * 60 * 24);

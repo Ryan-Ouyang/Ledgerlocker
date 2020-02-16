@@ -25,9 +25,6 @@ export default function Navbar(props) {
       <Link className="navbar-item" to="/owner">
         My Listings
       </Link>
-      <Link className="navbar-item" to="/dashboard">
-        Dashboard
-      </Link>
       <div className="navbar-end">
         <div className="navbar-item">
           <p>{props.addr ? "Welcome, " + props.addr : ""}</p>

@@ -15,7 +15,6 @@ let web3 = new Web3(fm.getProvider());
 export default function Owner(props) {
   const [addr, setAddr] = useState("");
   const [listings, setListings] = useState([]);
-  const [bookings, setBookings] = useState([]);
   const [ownerListings, setOwnerListings] = useState([]);
 
   useEffect(() => {
@@ -25,6 +24,8 @@ export default function Owner(props) {
         web3.eth.defaultAccount = `${address[0]}`;
       });
     };
+
+    loginUser();
   }, []);
 
   useEffect(() => {
@@ -33,14 +34,7 @@ export default function Owner(props) {
       setListings(result.data);
     };
 
-    const fetchBookings = async () => {
-      const result = await axios("http://localhost:3001/api/listings/booked");
-      setBookings(result.data);
-    };
-
-    //loginUser();
     fetchListings();
-    fetchBookings();
   }, [addr]);
 
   useEffect(() => {
@@ -48,9 +42,7 @@ export default function Owner(props) {
       let _ownerListings = [];
 
       listings.forEach(listing => {
-        let ownerListing = bookings.find(b => b.owner == listing.owner);
-        console.log(listing);
-        if (ownerListing != null) {
+        if (listing.owner == addr) {
           _ownerListings.push(listing);
         }
       });
@@ -59,7 +51,7 @@ export default function Owner(props) {
     };
 
     fetchOwnerListings();
-  }, [listings, bookings]);
+  }, [listings]);
 
   return (
     <>

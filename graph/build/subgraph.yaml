@@ -6,7 +6,7 @@ dataSources:
     name: Contract
     network: kovan
     source:
-      address: "0x754cEd19DaC5e791Fe989281747771F38626C9DC"
+      address: "0xA8AfBbb79Aa49EC8778a8A6e44D40630Ef327500"
       abi: Contract
       startBlock: 16798751
     mapping:
@@ -20,7 +20,7 @@ dataSources:
         - OwnershipTransferred
       abis:
         - name: Contract
-          file: Contract\abis\Contract.json
+          file: Contract/abis/Contract.json
       eventHandlers:
         - event: listingBooked(uint256,uint256,bool,address,address)
           handler: handlelistingBooked
@@ -28,4 +28,4 @@ dataSources:
           handler: handlelistingClosed
         - event: listingCreated(uint256,uint256,bool,address,address)
           handler: handlelistingCreated
-      file: Contract\Contract.wasm
+      file: Contract/Contract.wasm

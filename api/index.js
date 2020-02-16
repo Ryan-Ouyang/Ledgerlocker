@@ -12,7 +12,7 @@ const Tx = require("ethereumjs-tx").Transaction;
 // Admin user
 const privateKey =
   "d72c3e39f07665c8594ed6354d9c3f528f501fa8bda627be548c1ace7b3dc28e";
-const address = "0xA5A4E75ED687E45deC203abB3b1a14516D1078D0";
+const address = "0x754cEd19DaC5e791Fe989281747771F38626C9DC";
 
 // Contract info
 const privateKeyHex = Buffer.from(privateKey, "hex");

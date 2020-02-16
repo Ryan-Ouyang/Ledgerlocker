@@ -12,7 +12,7 @@ export default function Dashboard() {
   const web3 = new Web3(
     "https://kovan.infura.io/v3/b08e31ca292b465d8ddb30d57921c756"
   );
-  const contractAddr = "0xc021D5C58D92d24411EFa29aA7F72fC9bb2B707C";
+  const contractAddr = "0x754cEd19DaC5e791Fe989281747771F38626C9DC";
 
   const instance = new web3.eth.Contract(contractABI, contractAddr);
   console.log("Contract instantiated");

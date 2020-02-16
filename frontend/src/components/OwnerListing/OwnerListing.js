@@ -20,7 +20,7 @@ export default function MainListing(props) {
       <div className="box" onClick={() => setModalVisible(!isModalVisible)}>
         <h1 className="title">{props.listing.name}</h1>
         <h2 className="subtitle">
-          {props.listing.address} - {props.listing.rent}
+          {props.listing.address} - {props.listing.price}
         </h2>
 
         {props.listing.booked && (
@@ -60,7 +60,7 @@ export default function MainListing(props) {
             <br />
             <p className="is-size-3">Rent</p>
             <p className="is-size-5">
-              Daily Rent: {props.listing.rent}
+              Daily Rent: {props.listing.price}
               <br />
               Stake Amount: {props.listing.stake + "x"}
               <br />

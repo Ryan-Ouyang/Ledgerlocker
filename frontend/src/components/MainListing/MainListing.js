@@ -49,7 +49,7 @@ export default function MainListing(props) {
       .send({ from: props.addr })
       .then(
         props.contract.methods
-          .bookListing(props.listing.id, duration)
+          .bookListing(props.listing.id, duration * 86400)
           .send({ from: props.addr, gas: 500000 })
       )
       .then(
@@ -74,7 +74,7 @@ export default function MainListing(props) {
       <div className="box" onClick={() => setModalVisible(!isModalVisible)}>
         <h1 className="title">{props.listing.name}</h1>
         <h2 className="subtitle">
-          {props.listing.address} - {props.listing.rent} DAI/day
+          {props.listing.address} - {props.listing.price} DAI/day
         </h2>
         <img src={props.listing.images[0]}></img>
       </div>
@@ -110,7 +110,7 @@ export default function MainListing(props) {
             <br />
             <p className="is-size-3">Rent</p>
             <p className="is-size-5">
-              Daily Rent: {props.listing.rent}
+              Daily Rent: {props.listing.price}
               <br />
               Stake Amount: {props.listing.stake + "x"}
               <br />

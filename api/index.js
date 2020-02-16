@@ -84,7 +84,7 @@ app.get("/api/listings", function(req, res) {
     },
     {
       name: "Cosy Apartment in Denver, CO",
-      id: 4,
+      id: 2,
       address: "Denver, CO",
       rent: "50 DAI/day",
       stake: 2,

@@ -29,9 +29,9 @@ export default function Navbar(props) {
         <div className="navbar-item">
           <p>{props.addr ? "Welcome, " + props.addr : ""}</p>
         </div>
-        <Link className="navbar-item" to="/profile">
+        <div className="navbar-item">
           <img src={profileImage} className="profile-img" />
-        </Link>
+        </div>
       </div>
     </nav>
   );

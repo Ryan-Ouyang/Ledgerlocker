@@ -6,6 +6,7 @@ var server = require("http").createServer(app);
 var io = require("socket.io")(server);
 
 const web3 = require("web3");
+
 const Tx = require("ethereumjs-tx").Transaction;
 
 // Admin user
@@ -554,7 +555,7 @@ app.get("/api/listings", function (req, res) {
       name: "Lovely Micro-Studio in Forest Park, GA",
       id: 1,
       address: "Forest Park, GA",
-      rent: "45 DAI/day",
+      rent: 45,
       booked: true,
       stake: 2,
       owner: "0xed7c62124138144e42ddd57dd4cd20e9416a688f",
@@ -574,9 +575,10 @@ app.get("/api/listings", function (req, res) {
     {
       name: "Historic Carriage House in Denver's Oldest Neighborhood",
       id: 2,
-      address: "55 East 31st Avenue, Denver, CO",
-      rent: "50 DAI/day",
-      booked: false,
+      address: "Denver, CO",
+      rent: 50,
+      booked: true,
+      renter: "0xd02b00EFd6E38d7735C7b1793edD6379E8BF5efB",
       stake: 2,
       owner: "0xed7c62124138144e42ddd57dd4cd20e9416a688f",
       description:
@@ -675,6 +677,63 @@ app.get("/api/listings", function (req, res) {
         "https://a0.muscache.com/im/pictures/4e238c27-72c7-4e66-9d04-2fa538fdfe1b.jpg?aki_policy=large",
         "https://a0.muscache.com/im/pictures/d81c051d-f048-4562-9c03-3eb8b0f8f572.jpg?aki_policy=large",
         "https://a0.muscache.com/im/pictures/0b50497e-4dad-4437-9fc7-5609ae55188e.jpg?aki_policy=large"
+      ]
+    },
+    {
+      name: "Historic Carriage House in Denver's Oldest Neighborhood",
+      id: 3,
+      address: "55 East 31st Avenue, Denver, CO",
+      rent: 50,
+      booked: false,
+      stake: 2,
+      renter: "0x0000000000000000000000000000000000000000",
+      owner: "0xd02b00EFd6E38d7735C7b1793edD6379E8BF5efB",
+      description:
+        "Prepare to be charmed by the exposed brickwork and quirky decor of this lovely historic home that once sheltered horses in the late 1800s. It's been featured in Architectural Digest online as Colorado's most unique and beautiful Airbnb property.",
+      images: [
+        "https://a0.muscache.com/4ea/air/v2/pictures/8a093f7e-d602-4487-9399-c2daa11fcc2e.jpg?t=r:w2500-h1500-sfit,e:fjpg-c90",
+        "https://a0.muscache.com/4ea/air/v2/pictures/877a6b3f-aaa6-4cd0-9452-0a5cd21ce09a.jpg?t=r:w2500-h1500-sfit,e:fjpg-c90",
+        "https://a0.muscache.com/4ea/air/v2/pictures/d50e1732-4bb0-4121-8636-4e86dd87066c.jpg?t=r:w2500-h1500-sfit,e:fjpg-c90",
+        "https://a0.muscache.com/4ea/air/v2/pictures/9e2d6a5c-f0a7-45ea-a5fd-540cce73256a.jpg?t=r:w2500-h1500-sfit,e:fjpg-c90",
+        "https://a0.muscache.com/4ea/air/v2/pictures/f0e796f0-9fe9-4c6f-a2ab-9ad007a675a9.jpg?t=r:w2500-h1500-sfit,e:fjpg-c90"
+      ]
+    },
+    {
+      name: "Historic Carriage House in Denver's Oldest Neighborhood",
+      id: 4,
+      address: "55 East 31st Avenue, Denver, CO",
+      rent: 50,
+      booked: false,
+      renter: "0x0000000000000000000000000000000000000000",
+      stake: 2,
+      owner: "0xd02b00EFd6E38d7735C7b1793edD6379E8BF5efB",
+      description:
+        "Prepare to be charmed by the exposed brickwork and quirky decor of this lovely historic home that once sheltered horses in the late 1800s. It's been featured in Architectural Digest online as Colorado's most unique and beautiful Airbnb property.",
+      images: [
+        "https://a0.muscache.com/4ea/air/v2/pictures/8a093f7e-d602-4487-9399-c2daa11fcc2e.jpg?t=r:w2500-h1500-sfit,e:fjpg-c90",
+        "https://a0.muscache.com/4ea/air/v2/pictures/877a6b3f-aaa6-4cd0-9452-0a5cd21ce09a.jpg?t=r:w2500-h1500-sfit,e:fjpg-c90",
+        "https://a0.muscache.com/4ea/air/v2/pictures/d50e1732-4bb0-4121-8636-4e86dd87066c.jpg?t=r:w2500-h1500-sfit,e:fjpg-c90",
+        "https://a0.muscache.com/4ea/air/v2/pictures/9e2d6a5c-f0a7-45ea-a5fd-540cce73256a.jpg?t=r:w2500-h1500-sfit,e:fjpg-c90",
+        "https://a0.muscache.com/4ea/air/v2/pictures/f0e796f0-9fe9-4c6f-a2ab-9ad007a675a9.jpg?t=r:w2500-h1500-sfit,e:fjpg-c90"
+      ]
+    },
+    {
+      name: "❤️Capital Hill Loft Style Apt Hot Tub",
+      id: 5,
+      address: "1375 Corona St, Denver, Colorado",
+      rent: 25,
+      booked: false,
+      stake: 2,
+      renter: "0x0000000000000000000000000000000000000000",
+      owner: "0xed7c62124138144e42ddd57dd4cd20e9416a688f",
+      description:
+        "Beautiful basement apartment in 1890 Victorian home. Just added brand new furniture in living room. Enter through a courtyard with Koi pond. Walking distance to everything; Ogden, Fillmore, Bluebird, 16th st mall, nightlife, restaurants, min. from Denver Pavilion. Kitchen Bike Rental Hot Tub Laundry. Includes one off-street parking spot for guests. We do get booked in advance so book now!",
+      images: [
+        "https://a0.muscache.com/im/pictures/352e9a77-44ca-484f-92aa-fe50d2444265.jpg?aki_policy=xx_large",
+        "https://a0.muscache.com/im/pictures/aa339798-9600-4003-bb0f-e0205d1f5274.jpg?aki_policy=large",
+        "https://a0.muscache.com/im/pictures/51f34cad-4bbe-4b9a-a3b9-23e45a2a1206.jpg?aki_policy=large",
+        "https://a0.muscache.com/im/pictures/d6cfba23-c73e-4ca9-85d2-4083acb0b07d.jpg?aki_policy=large",
+        "https://a0.muscache.com/im/pictures/cf0871f7-4070-4b88-bc1d-5e10735a1a0d.jpg?aki_policy=large"
       ]
     }
   ];

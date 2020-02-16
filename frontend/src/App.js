@@ -20,9 +20,6 @@ export default function App() {
           <Route path="/bookings">
             <Bookings />
           </Route>
-          <Route path="/profile">
-            <Profile />
-          </Route>
           <Route path="/owner">
             <Owner />
           </Route>
@@ -30,8 +27,4 @@ export default function App() {
       </div>
     </Router>
   );
-}
-
-function Profile() {
-  return <p>testing 2</p>;
 }

@@ -187,6 +187,7 @@ app.post("/api/book", async function(req, res) {
 app.get("/api/createListing/:id/:price", async function(req, res) {
   createListing(req.params.id, req.params.price);
   listings[req.params.id].created = true;
+  listings[req.params.id].owner = address;
 });
 
 server.listen(3001, () => console.log("API listening on port 3001"));

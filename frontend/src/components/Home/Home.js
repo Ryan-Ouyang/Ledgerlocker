@@ -18,7 +18,7 @@ let space;
 
 let spaceName = "ledgerlocker-test1";
 
-const contractAddr = "0xa1c3DC48D4D649279E8a39795769e475f59eCe92";
+const contractAddr = "0xc021D5C58D92d24411EFa29aA7F72fC9bb2B707C";
 const daiContractAddr = "0x4f96fe3b7a6cf9725f59d353f723c1bdb64ca6aa";
 
 export default function Home(props) {

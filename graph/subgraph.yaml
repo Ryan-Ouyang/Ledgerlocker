@@ -6,7 +6,7 @@ dataSources:
     name: Contract
     network: kovan
     source:
-      address: "0xa1c3DC48D4D649279E8a39795769e475f59eCe92"
+      address: "0xc021D5C58D92d24411EFa29aA7F72fC9bb2B707C"
       abi: Contract
       startBlock: 16798751
     mapping:

@@ -542,49 +542,52 @@ app.get("/api/listings/booked", async function(req, res) {
 });
 
 app.get("/api/listings", function(req, res) {
-	const listings = [
-		{
-			name: "Lovely Micro-Studio in Forest Park, GA",
-			id: 1,
-			address: "Forest Park, GA",
-			rent: "45 DAI/day",
-			stake: 2,
-			description:
-				"123 Broadway, Denver near ABC Mall. Walking score 95, with everything you can want within 5 minutes walking distance. House was just renovated and has hardwood floors, new kitchen appliances, and renovated bathrooms. A great place to call it your home!",
+  const listings = [
+    {
+      name: "Lovely Micro-Studio in Forest Park, GA",
+      id: 1,
+      address: "Forest Park, GA",
+      rent: "45 DAI/day",
+      booked: true,
+      stake: 2,
+      renter: "0xsdkjfn3r289ry2930fosdfln2309rj23ffon3wf",
+      owner: "0xd02b00EFd6E38d7735C7b1793edD6379E8BF5efB",
+      description:
+        "123 Broadway, Denver near ABC Mall. Walking score 95, with everything you can want within 5 minutes walking distance. House was just renovated and has hardwood floors, new kitchen appliances, and renovated bathrooms. A great place to call it your home!",
 
-			images: [
-				"https://www.padsplit.com/img/rooms/room_866_0_1578610474.769763.jpg",
-				"https://www.padsplit.com/img/rooms/room_866_1_1578610474.769763.jpg",
-				"https://www.padsplit.com/img/psproperty/psproperty_158_4_1578610474.769763.jpg",
-				"https://www.padsplit.com/img/psproperty/psproperty_158_3_1578610474.769763.jpg",
-				"https://www.padsplit.com/img/psproperty/psproperty_158_2_1578610474.769763.jpg",
-				"https://www.padsplit.com/img/psproperty/psproperty_158_1_1578610474.769763.jpg",
-				"https://www.padsplit.com/img/psproperty/psproperty_158_0_1578610474.769763.jpg"
-			]
-		},
-		{
-			name: "Cosy Apartment in Denver, CO",
-			id: 4,
-			address: "Denver, CO",
-			rent: "50 DAI/day",
-			stake: 2,
-			description:
-				"123 Broadway, Denver near ABC Mall. Walking score 95, with everything you can want within 5 minutes walking distance. House was just renovated and has hardwood floors, new kitchen appliances, and renovated bathrooms. A great place to call it your home!",
+      images: [
+        "https://www.padsplit.com/img/rooms/room_866_0_1578610474.769763.jpg",
+        "https://www.padsplit.com/img/rooms/room_866_1_1578610474.769763.jpg",
+        "https://www.padsplit.com/img/psproperty/psproperty_158_4_1578610474.769763.jpg",
+        "https://www.padsplit.com/img/psproperty/psproperty_158_3_1578610474.769763.jpg",
+        "https://www.padsplit.com/img/psproperty/psproperty_158_2_1578610474.769763.jpg",
+        "https://www.padsplit.com/img/psproperty/psproperty_158_1_1578610474.769763.jpg",
+        "https://www.padsplit.com/img/psproperty/psproperty_158_0_1578610474.769763.jpg"
+      ]
+    },
+    {
+      name: "Cosy Apartment in Denver, CO",
+      id: 2,
+      address: "Denver, CO",
+      rent: "50 DAI/day",
+      booked: true,
+      renter: "0xd02b00EFd6E38d7735C7b1793edD6379E8BF5efB",
+      stake: 2,
+      owner: "0xed7c62124138144e42ddd57dd4cd20e9416a688f",
+      description:
+        "123 Broadway, Denver near ABC Mall. Walking score 95, with everything you can want within 5 minutes walking distance. House was just renovated and has hardwood floors, new kitchen appliances, and renovated bathrooms. A great place to call it your home!",
 
-			images: [
-				"https://www.padsplit.com/img/rooms/room_866_0_1578610474.769763.jpg",
-				"https://www.padsplit.com/img/rooms/room_866_1_1578610474.769763.jpg",
-				"https://www.padsplit.com/img/psproperty/psproperty_158_4_1578610474.769763.jpg",
-				"https://www.padsplit.com/img/psproperty/psproperty_158_3_1578610474.769763.jpg",
-				"https://www.padsplit.com/img/psproperty/psproperty_158_2_1578610474.769763.jpg",
-				"https://www.padsplit.com/img/psproperty/psproperty_158_1_1578610474.769763.jpg",
-				"https://www.padsplit.com/img/psproperty/psproperty_158_0_1578610474.769763.jpg"
-			]
-		}
-	];
-
-	res.send(listings);
-});
+      images: [
+        "https://www.padsplit.com/img/rooms/room_866_0_1578610474.769763.jpg",
+        "https://www.padsplit.com/img/rooms/room_866_1_1578610474.769763.jpg",
+        "https://www.padsplit.com/img/psproperty/psproperty_158_4_1578610474.769763.jpg",
+        "https://www.padsplit.com/img/psproperty/psproperty_158_3_1578610474.769763.jpg",
+        "https://www.padsplit.com/img/psproperty/psproperty_158_2_1578610474.769763.jpg",
+        "https://www.padsplit.com/img/psproperty/psproperty_158_1_1578610474.769763.jpg",
+        "https://www.padsplit.com/img/psproperty/psproperty_158_0_1578610474.769763.jpg"
+      ]
+    }
+  ];
 
 app.get("/api/createListing/:id/:price", async function(req, res) {
 	createListing(req.params.id, req.params.price);

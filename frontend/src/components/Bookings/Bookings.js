@@ -4,18 +4,18 @@ import Web3 from "web3";
 import axios from "axios";
 
 import Navbar from "../Navbar/Navbar";
-import OwnerListing from "../OwnerListing/OwnerListing";
+import BookingListing from "../BookingListing/BookingListing";
 
 import "bulma/css/bulma.css";
-import "./Owner.css";
+import "./Booking.css";
 
 const fm = new Fortmatic("pk_test_C0C9ADE8AD6C86A9", "kovan");
 let web3 = new Web3(fm.getProvider());
 
-export default function Owner(props) {
+export default function Bookings(props) {
   const [addr, setAddr] = useState("");
-  const [listings, setListings] = useState([]);
-  const [ownerListings, setOwnerListings] = useState([]);
+  const [bookings, setBookings] = useState([]);
+  const [bookingListings, setBookingListings] = useState([]);
 
   useEffect(() => {
     const loginUser = async () => {
@@ -29,29 +29,30 @@ export default function Owner(props) {
   }, []);
 
   useEffect(() => {
-    const fetchListings = async () => {
-      const result = await axios("http://localhost:3001/api/listings");
-      setListings(result.data);
+    const fetchBookings = async () => {
+      const result = await axios("http://localhost:3001/api/listings/booked");
+      setBookings(result.data);
     };
 
-    fetchListings();
+    fetchBookings();
   }, [addr]);
 
   useEffect(() => {
-    const fetchOwnerListings = async () => {
-      let _ownerListings = [];
+    const fetchBookingListings = async () => {
+      let _bookingListings = [];
 
-      listings.forEach(listing => {
-        if (listing.owner == addr) {
-          _ownerListings.push(listing);
+      bookings.forEach(booking => {
+        console.log(booking.renter);
+        if (booking.renter == addr) {
+          _bookingListings.push(booking);
         }
       });
 
-      setOwnerListings(_ownerListings);
+      setBookingListings(_bookingListings);
     };
 
-    fetchOwnerListings();
-  }, [listings]);
+    fetchBookingListings();
+  }, [bookings]);
 
   return (
     <>
@@ -59,9 +60,9 @@ export default function Owner(props) {
       <div className="container">
         <div className="columns">
           <div className="column is-half">
-            <h1 className="is-size-1">My Listings</h1>
-            {ownerListings.map((ol, i) => (
-              <OwnerListing key={i} listing={ol} addr={addr}></OwnerListing>
+            <h1 className="is-size-1">My Bookings</h1>
+            {bookingListings.map((ol, i) => (
+              <BookingListing key={i} listing={ol} addr={addr}></BookingListing>
             ))}
           </div>
           <div className="column is-half">

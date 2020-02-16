@@ -19,11 +19,11 @@ export default function Navbar(props) {
       <Link className="navbar-item" to="/">
         Home
       </Link>
-      <Link className="navbar-item" to="/search">
-        Search
+      <Link className="navbar-item" to="/bookings">
+        My Bookings
       </Link>
       <Link className="navbar-item" to="/owner">
-        Owner Portal
+        My Listings
       </Link>
       <div className="navbar-end">
         <div className="navbar-item">

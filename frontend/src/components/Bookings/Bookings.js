@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Box from "3box";
 import Fortmatic from "fortmatic";
 import Web3 from "web3";
 import axios from "axios";
@@ -12,10 +13,15 @@ import "./Booking.css";
 const fm = new Fortmatic("pk_test_C0C9ADE8AD6C86A9", "kovan");
 let web3 = new Web3(fm.getProvider());
 
+let box, space, thread, did;
+let spaceName = "ledgerlocker-test1";
+let threadName = "ll-test";
+
 export default function Bookings(props) {
   const [addr, setAddr] = useState("");
   const [bookings, setBookings] = useState([]);
   const [bookingListings, setBookingListings] = useState([]);
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     const loginUser = async () => {
@@ -27,6 +33,24 @@ export default function Bookings(props) {
 
     loginUser();
   }, []);
+
+  useEffect(() => {
+    const createJoinThread = async () => {
+      await open3Box(addr);
+      thread = await space.joinThread(threadName, {
+        firstModerator: "did:3:0"
+      });
+      const _posts = await thread.getPosts();
+      console.log("posts: ", _posts);
+      setPosts(_posts);
+      thread.onUpdate(async () => {
+        const _posts = await thread.getPosts();
+        setPosts(_posts);
+      });
+    };
+
+    createJoinThread();
+  }, [addr]);
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -54,6 +78,14 @@ export default function Bookings(props) {
     fetchBookingListings();
   }, [bookings]);
 
+  async function sendMessage() {
+    let msg = document.getElementById("message-input");
+    await thread.post(msg.value);
+    msg.value = "";
+    const _posts = await thread.getPosts();
+    setPosts(_posts);
+  }
+
   return (
     <>
       <Navbar addr={addr} />
@@ -69,86 +101,41 @@ export default function Bookings(props) {
             <h1 className="is-size-1">Chat</h1>
             <div className="chatbox">
               <p className="is-size-4 chatboxheader has-background-grey-lighter">
-                Chatting with 0x123455032032233242343225fsdfs
+                Chatting with owner
               </p>
               <br />
               <br />
               <div className="cbcontent is-size-5">
                 <ul>
-                  <li className="receiverMsg">test</li>
-                  <br />
-                  <br />
-                  <li className="senderMsg">test</li>
-                  <br />
-                  <br />
-                  <li className="receiverMsg">test</li>
-                  <br />
-                  <br />
-                  <li className="senderMsg">test</li>
-                  <br />
-                  <br />
-                  <li className="receiverMsg">test</li>
-                  <br />
-                  <br />
-                  <li className="senderMsg">test</li>
-                  <br />
-                  <br />
-                  <li className="receiverMsg">test</li>
-                  <br />
-                  <br />
-                  <li className="senderMsg">test</li>
-                  <br />
-                  <br />
-                  <li className="receiverMsg">test</li>
-                  <br />
-                  <br />
-                  <li className="senderMsg">test</li>
-                  <br />
-                  <br />
-                  <li className="receiverMsg">test</li>
-                  <br />
-                  <br />
-                  <li className="senderMsg">test</li>
-                  <br />
-                  <br />
-                  <li className="receiverMsg">test</li>
-                  <br />
-                  <br />
-                  <li className="senderMsg">test</li>
-                  <br />
-                  <br />
-                  <li className="receiverMsg">test</li>
-                  <br />
-                  <br />
-                  <li className="senderMsg">test</li>
-                  <br />
-                  <br />
-                  <li className="receiverMsg">test</li>
-                  <br />
-                  <br />
-                  <li className="senderMsg">test</li>
-                  <br />
-                  <br />
-                  <li className="receiverMsg">test</li>
-                  <br />
-                  <br />
-                  <li className="senderMsg">test</li>
-                  <br />
-                  <br />
-                  <li className="receiverMsg">test</li>
-                  <br />
-                  <br />
-                  <li className="senderMsg">test</li>
-                  <br />
-                  <br />
+                  {posts.map((p, i) => {
+                    if (p.author == did) {
+                      return (
+                        <div key={i}>
+                          <li className="senderMsg">{p.message}</li>
+                          <br />
+                          <br />
+                        </div>
+                      );
+                    } else {
+                      return (
+                        <div key={i}>
+                          <li className="receiverMsg">{p.message}</li>
+                          <br />
+                          <br />
+                        </div>
+                      );
+                    }
+                  })}
                 </ul>
               </div>
               <div className="field has-addons">
                 <div className="control is-expanded">
-                  <input className="input" type="text" />
+                  <input className="input" type="text" id="message-input" />
                 </div>
                 <div className="control">
-                  <a className="button is-info">Send</a>
+                  <a className="button is-info" onClick={sendMessage}>
+                    Send
+                  </a>
                 </div>
               </div>
             </div>
@@ -157,4 +144,29 @@ export default function Bookings(props) {
       </div>
     </>
   );
+}
+
+async function open3Box(addr) {
+  box = await Box.openBox(addr, fm.getProvider());
+  space = await box.openSpace(spaceName);
+  await box.syncDone;
+  await space.syncDone;
+  const config = await Box.getConfig(addr);
+  did = config.spaces[spaceName].DID;
+  console.log("Opened 3box box for ", addr);
+}
+
+async function set3BoxData(key, value) {
+  await space.private.set(key, value);
+  console.log("Set private value in 3box (key: ", key, ")");
+}
+
+async function get3BoxData(key) {
+  await space.private.get(key);
+  console.log("Got private value in 3box (key: ", key, ")");
+}
+
+async function remove3BoxData(key) {
+  await space.private.remove(key);
+  console.log("Removed private value in 3box (key: ", key, ")");
 }

@@ -17,7 +17,7 @@ const char* ssid = "BELLWIFI@MCDONALDS";
 const char* password = "bigChungus";
 
 /// Socket.IO Settings ///
-const char* host = "1c7b7c59.ngrok.io";
+const char* host = "2726c660.ngrok.io";
 const int port = 3001;
 
 SocketIoClient socket;

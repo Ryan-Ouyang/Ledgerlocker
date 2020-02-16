@@ -89,12 +89,9 @@ contract ListingManager is Lending, Reputation {
         listing.renter = msg.sender;
 
         // Stores the timelocked balance in the owner account
-        _transfer(listing.owner, price, _duration);
-        
-        // Get stake
-        _transfer(msg.sender, price * stakeMultiplier, _duration);
+        _transfer(listing.owner, price, price * stakeMultiplier, _duration);
 
-        emit listingBooked(_id, listing.price, _isBooked(listing.timestamp), listing.renter, listing.owner);
+        emit listingBooked(_id, price, _isBooked(listing.timestamp), listing.renter, listing.owner);
     }
 
     /**

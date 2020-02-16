@@ -13,7 +13,7 @@ import daiContractABI from "../../abis/dai";
 const fm = new Fortmatic("pk_test_C0C9ADE8AD6C86A9", "kovan");
 let web3 = new Web3(fm.getProvider());
 
-const contractAddr = "0xf13a19affd74525ca8e25704c437a8c4c88505b4";
+const contractAddr = "0x6Fa6fF7Ef24431F644f46bACbe196925a4297c94";
 const daiContractAddr = "0x4f96fe3b7a6cf9725f59d353f723c1bdb64ca6aa";
 
 export default function Home(props) {

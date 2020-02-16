@@ -15,7 +15,7 @@ let web3 = new Web3(fm.getProvider());
 
 let box, space, thread, did;
 let spaceName = "ledgerlocker-test1";
-let threadName = "ll-test";
+let threadName = "ll";
 
 export default function Bookings(props) {
   const [addr, setAddr] = useState("");

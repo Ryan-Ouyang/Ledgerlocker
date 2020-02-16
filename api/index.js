@@ -180,6 +180,12 @@ app.get("/api/listings", async function(req, res) {
   res.json(_listings);
 });
 
+app.post("/api/book", async function(req, res) {
+  listings[req.body.id].booked = true;
+  listings[req.body.id].renter = req.body.renter;
+  res.sendStatus(200);
+});
+
 app.get("/api/createListing/:id/:price", async function(req, res) {
   createListing(req.params.id, req.params.price);
   listings[req.params.id].created = true;

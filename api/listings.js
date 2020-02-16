@@ -1,4 +1,4 @@
-const listings = {
+var listings = {
   "1": {
     name: "Lovely Micro-Studio in Forest Park, GA",
     id: 1,

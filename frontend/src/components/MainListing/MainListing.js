@@ -1,12 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
+import Fortmatic from "fortmatic";
+import Web3 from "web3";
+import axios from "axios";
+import Box from "3box";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+const fm = new Fortmatic("pk_test_C0C9ADE8AD6C86A9", "kovan");
+let web3 = new Web3(fm.getProvider());
+
+let box, space;
+let spaceName = "ledgerlocker-test1";
+
 export default function MainListing(props) {
   const [isModalVisible, setModalVisible] = useState(false);
   const [duration, setDuration] = useState(86400);
+  const [addr, setAddr] = useState("");
+
+  useEffect(() => {
+    const loginUser = async () => {
+      web3.eth.getAccounts().then(async address => {
+        setAddr(address[0]);
+        // addr = address[0]
+        console.log("Address: ", address[0]);
+        await open3Box(address[0]);
+        web3.eth.defaultAccount = `${address[0]}`;
+      });
+    };
+
+    loginUser();
+  }, []);
 
   var settings = {
     dots: true,
@@ -15,7 +40,7 @@ export default function MainListing(props) {
     slidesToShow: 1
   };
 
-  function handleBooking() {
+  async function handleBooking() {
     console.log(
       `Sending from ${props.addr} to ${props.contract._address} with dai ${props.daiContract._address}`
     );
@@ -32,6 +57,11 @@ export default function MainListing(props) {
           `Booked listing with id: ${props.listing.id} and duration ${duration}`
         )
       );
+    await set3BoxData("lockCode", "9786");
+    await axios.post("http://localhost:3001/api/book", {
+      id: props.listing.id,
+      renter: props.addr
+    });
   }
 
   const handleDurationChange = e => {
@@ -108,4 +138,27 @@ export default function MainListing(props) {
       </div>
     </div>
   );
+}
+
+async function open3Box(addr) {
+  box = await Box.openBox(addr, fm.getProvider());
+  space = await box.openSpace(spaceName);
+  await box.syncDone;
+  await space.syncDone;
+  console.log("Opened 3box box for ", addr);
+}
+
+async function set3BoxData(key, value) {
+  await space.private.set(key, value);
+  console.log("Set private value in 3box (key: ", key, ")");
+}
+
+async function get3BoxData(key) {
+  await space.private.get(key);
+  console.log("Got private value in 3box (key: ", key, ")");
+}
+
+async function remove3BoxData(key) {
+  await space.private.remove(key);
+  console.log("Removed private value in 3box (key: ", key, ")");
 }

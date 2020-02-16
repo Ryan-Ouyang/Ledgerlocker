@@ -12,8 +12,8 @@ contract ListingManager is Lending, Reputation {
     }
 
     // Event emitted when a listing is booked
-    event listingBooked(uint256 _id);
-    event listingClosed(uint256 _id);
+    event listingBooked(uint256 _id, uint256 _price, uint256 _timestamp, address _renter, address _owner);
+    event listingClosed(uint256 _id, uint256 _price, uint256 _timestamp, address _renter, address _owner);
 
     mapping(uint256 => Listing) listings;
 
@@ -42,6 +42,7 @@ contract ListingManager is Lending, Reputation {
         uint256 _id,
         uint256 _price // Price per day
     ) public {
+        // Only creates a listing 
         listings[_id] = Listing(_price, 0, address(0), msg.sender);
     }
 
@@ -67,7 +68,7 @@ contract ListingManager is Lending, Reputation {
         // Stores the timelocked balance in the owner account
         _transfer(listing.owner, listing.price, _duration);
 
-        emit listingBooked(_id);
+        emit listingBooked(_id, listing.price, listing.timestamp, listing.renter, listing.owner);
     }
 
     /**
@@ -81,6 +82,6 @@ contract ListingManager is Lending, Reputation {
 
         listing.renter = address(0);
 
-        emit listingClosed(_id);
+        emit listingClosed(_id, listing.price, listing.timestamp, listing.renter, listing.owner);
     }
 }

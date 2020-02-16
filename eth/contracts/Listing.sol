@@ -23,7 +23,7 @@ contract ListingManager is Lending, Reputation {
 
     //---Interface---
     function _isBooked(uint256 _timestamp) internal view returns (bool) {
-        return _timestamp < block.timestamp;
+        return _timestamp > block.timestamp;
     }
     
     function getListing(uint256 _id)

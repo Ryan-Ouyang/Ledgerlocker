@@ -12,12 +12,12 @@ const Tx = require("ethereumjs-tx").Transaction;
 // Admin user
 const privateKey =
   "d72c3e39f07665c8594ed6354d9c3f528f501fa8bda627be548c1ace7b3dc28e";
-const address = "0x754cEd19DaC5e791Fe989281747771F38626C9DC";
+const address = "0xA5A4E75ED687E45deC203abB3b1a14516D1078D0";
 
 // Contract info
 const privateKeyHex = Buffer.from(privateKey, "hex");
 
-const contractAddress = "0xc021D5C58D92d24411EFa29aA7F72fC9bb2B707C";
+const contractAddress = "0x754cEd19DaC5e791Fe989281747771F38626C9DC";
 
 const contractABI = require("./abi");
 let listings = require("./listings");

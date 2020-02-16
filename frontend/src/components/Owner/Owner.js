@@ -4,8 +4,10 @@ import Web3 from "web3";
 import axios from "axios";
 
 import Navbar from "../Navbar/Navbar";
+import OwnerListing from "../OwnerListing/OwnerListing";
 
 import "bulma/css/bulma.css";
+import "./Owner.css";
 
 const fm = new Fortmatic("pk_test_C0C9ADE8AD6C86A9", "kovan");
 let web3 = new Web3(fm.getProvider());
@@ -20,8 +22,6 @@ export default function Owner(props) {
     const loginUser = async () => {
       web3.eth.getAccounts().then(async address => {
         setAddr(address[0]);
-        // addr = address[0]
-        console.log("Address: ", address[0]);
         web3.eth.defaultAccount = `${address[0]}`;
       });
     };
@@ -31,13 +31,11 @@ export default function Owner(props) {
     const fetchListings = async () => {
       const result = await axios("http://localhost:3001/api/listings");
       setListings(result.data);
-      console.log("Fetched listings");
     };
 
     const fetchBookings = async () => {
       const result = await axios("http://localhost:3001/api/listings/booked");
       setBookings(result.data);
-      console.log("Fetched bookings");
     };
 
     //loginUser();
@@ -50,15 +48,13 @@ export default function Owner(props) {
       let _ownerListings = [];
 
       listings.forEach(listing => {
-        let ownerListing = bookings.find(b => b.listingId == listing.id);
+        let ownerListing = bookings.find(b => b.owner == listing.owner);
         console.log(listing);
         if (ownerListing != null) {
           _ownerListings.push(listing);
         }
       });
 
-      console.log("fetched owner listings");
-      console.log(_ownerListings);
       setOwnerListings(_ownerListings);
     };
 
@@ -73,11 +69,96 @@ export default function Owner(props) {
           <div className="column is-half">
             <h1 className="is-size-1">My Listings</h1>
             {ownerListings.map((ol, i) => (
-              <p key={i}>{ol.id}</p>
+              <OwnerListing key={i} listing={ol} addr={addr}></OwnerListing>
             ))}
           </div>
           <div className="column is-half">
             <h1 className="is-size-1">Chat</h1>
+            <div className="chatbox">
+              <p className="is-size-4 chatboxheader has-background-grey-lighter">
+                Chatting with 0x123455032032233242343225fsdfs
+              </p>
+              <br />
+              <br />
+              <div className="cbcontent is-size-5">
+                <ul>
+                  <li className="receiverMsg">test</li>
+                  <br />
+                  <br />
+                  <li className="senderMsg">test</li>
+                  <br />
+                  <br />
+                  <li className="receiverMsg">test</li>
+                  <br />
+                  <br />
+                  <li className="senderMsg">test</li>
+                  <br />
+                  <br />
+                  <li className="receiverMsg">test</li>
+                  <br />
+                  <br />
+                  <li className="senderMsg">test</li>
+                  <br />
+                  <br />
+                  <li className="receiverMsg">test</li>
+                  <br />
+                  <br />
+                  <li className="senderMsg">test</li>
+                  <br />
+                  <br />
+                  <li className="receiverMsg">test</li>
+                  <br />
+                  <br />
+                  <li className="senderMsg">test</li>
+                  <br />
+                  <br />
+                  <li className="receiverMsg">test</li>
+                  <br />
+                  <br />
+                  <li className="senderMsg">test</li>
+                  <br />
+                  <br />
+                  <li className="receiverMsg">test</li>
+                  <br />
+                  <br />
+                  <li className="senderMsg">test</li>
+                  <br />
+                  <br />
+                  <li className="receiverMsg">test</li>
+                  <br />
+                  <br />
+                  <li className="senderMsg">test</li>
+                  <br />
+                  <br />
+                  <li className="receiverMsg">test</li>
+                  <br />
+                  <br />
+                  <li className="senderMsg">test</li>
+                  <br />
+                  <br />
+                  <li className="receiverMsg">test</li>
+                  <br />
+                  <br />
+                  <li className="senderMsg">test</li>
+                  <br />
+                  <br />
+                  <li className="receiverMsg">test</li>
+                  <br />
+                  <br />
+                  <li className="senderMsg">test</li>
+                  <br />
+                  <br />
+                </ul>
+              </div>
+              <div className="field has-addons">
+                <div className="control is-expanded">
+                  <input className="input" type="text" />
+                </div>
+                <div className="control">
+                  <a className="button is-info">Send</a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

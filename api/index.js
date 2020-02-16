@@ -96,7 +96,9 @@ app.get("/api/listings", function(req, res) {
       id: 1,
       address: "Forest Park, GA",
       rent: "45 DAI/day",
+      booked: true,
       stake: 2,
+      owner: "0xed7c62124138144e42ddd57dd4cd20e9416a688f",
       description:
         "123 Broadway, Denver near ABC Mall. Walking score 95, with everything you can want within 5 minutes walking distance. House was just renovated and has hardwood floors, new kitchen appliances, and renovated bathrooms. A great place to call it your home!",
 
@@ -115,7 +117,9 @@ app.get("/api/listings", function(req, res) {
       id: 2,
       address: "Denver, CO",
       rent: "50 DAI/day",
+      booked: false,
       stake: 2,
+      owner: "0xed7c62124138144e42ddd57dd4cd20e9416a688f",
       description:
         "123 Broadway, Denver near ABC Mall. Walking score 95, with everything you can want within 5 minutes walking distance. House was just renovated and has hardwood floors, new kitchen appliances, and renovated bathrooms. A great place to call it your home!",
 

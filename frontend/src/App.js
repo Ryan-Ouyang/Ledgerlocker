@@ -59,12 +59,6 @@ function Home(props) {
   const [daiContract, setDaiContract] = useState();
 
   useEffect(() => {
-    const fetchListings = async () => {
-      const result = await axios("http://localhost:3001/api/listings");
-      setListings(result.data);
-      console.log("Fetched listings");
-    };
-
     const loginUser = async () => {
       web3.eth.getAccounts().then(async address => {
         setAddr(address[0]);
@@ -76,6 +70,16 @@ function Home(props) {
         await remove3BoxData("testing");
         web3.eth.defaultAccount = `${address[0]}`;
       });
+    };
+
+    loginUser();
+  }, []);
+
+  useEffect(() => {
+    const fetchListings = async () => {
+      const result = await axios("http://localhost:3001/api/listings");
+      setListings(result.data);
+      console.log("Fetched listings");
     };
 
     const instantiateContracts = async () => {
@@ -91,7 +95,6 @@ function Home(props) {
     };
 
     fetchListings();
-    loginUser();
     instantiateContracts();
   }, []);
 

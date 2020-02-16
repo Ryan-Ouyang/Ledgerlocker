@@ -19,8 +19,8 @@ const privateKeyHex = Buffer.from(privateKey, "hex");
 
 const contractAddress = "0x158e2c19E19F7C79D5097166a90009f9f73dc301";
 
-const { contractABI } = require("./abi");
-let { listings } = require("./listings");
+const contractABI= require("./abi");
+let listings = require("./listings");
 
 web3js = new web3(
   "https://kovan.infura.io/v3/b08e31ca292b465d8ddb30d57921c756"
@@ -185,10 +185,11 @@ app.post("/api/book", async function(req, res) {
   res.sendStatus(200);
 });
 
-app.get("/api/createListing/:id/:price", async function(req, res) {
-  createListing(req.params.id, req.params.price);
+app.get("/api/createListing/:id/", async function(req, res) {
+  createListing(req.params.id, `${listings[req.params.id].price * 10e18}`);
   listings[req.params.id].created = true;
   listings[req.params.id].owner = address;
+  res.sendStatus(200);
 });
 
 server.listen(3001, () => console.log("API listening on port 3001"));

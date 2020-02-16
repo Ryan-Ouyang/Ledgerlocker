@@ -19,7 +19,7 @@ export function handlelistingBooked(event: listingBooked): void {
   }
 
   // Entity fields can be set based on event parameters
-  entity._id = event.params._id;
+  entity.listingId = event.params._id;
 
   // Entities can be written to the store with `.save()`
   entity.save();
@@ -53,5 +53,3 @@ export function handlelistingBooked(event: listingBooked): void {
 }
 
 export function handlelistingClosed(event: listingClosed): void {}
-
-export function handleOwnershipTransferred(event: OwnershipTransferred): void {}

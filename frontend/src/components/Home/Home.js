@@ -16,6 +16,8 @@ let web3 = new Web3(fm.getProvider());
 let box;
 let space;
 
+let spaceName = "ledgerlocker-test1";
+
 const contractAddr = "0xE6023B2DaA371AB5fda43E12C4b2BbB86C0955f6";
 const daiContractAddr = "0x4f96fe3b7a6cf9725f59d353f723c1bdb64ca6aa";
 
@@ -106,7 +108,7 @@ export default function Home(props) {
 
 async function open3Box(addr) {
   box = await Box.openBox(addr, fm.getProvider());
-  space = await box.openSpace("ledgerlocker-test1");
+  space = await box.openSpace(spaceName);
   await box.syncDone;
   await space.syncDone;
   console.log("Opened 3box box for ", addr);

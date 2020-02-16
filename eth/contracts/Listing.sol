@@ -63,7 +63,7 @@ contract ListingManager is Lending, Reputation {
     ) public {
         Listing memory listing = Listing(_price, 0, address(0), msg.sender);
         listings[_id] = listing;
-        emit listingBooked(_id, listing.price, _isBooked(listing.timestamp), listing.renter, listing.owner);
+        emit listingCreated(_id, listing.price, _isBooked(listing.timestamp), listing.renter, listing.owner);
     }
 
     /**

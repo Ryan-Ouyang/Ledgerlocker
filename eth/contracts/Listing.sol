@@ -104,7 +104,10 @@ contract ListingManager is Lending, Reputation {
         require(listing.renter == msg.sender, "Listing renter is incorrect");
 
         listing.renter = address(0);
-
+        
+        // Give back stake 
+        withdraw();
+        
         emit listingClosed(_id, listing.price, _isBooked(listing.timestamp), listing.renter, listing.owner);
     }
 }

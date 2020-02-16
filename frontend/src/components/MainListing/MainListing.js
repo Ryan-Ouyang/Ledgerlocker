@@ -14,6 +14,11 @@ export default function MainListing(props) {
 		slidesToShow: 1
 	};
 
+	function handleBooking() {
+		props.contract.methods.bookListing(props.listing.id).send();
+		console.log(`Booked listing with id: ${props.listing.id}`);
+	}
+
 	return (
 		<div>
 			{/* Listing */}
@@ -61,10 +66,11 @@ export default function MainListing(props) {
 							<br />
 							Stake Amount: {props.listing.stake + "x"}
 							<br />
-							From: <input type="date" />
+							From: <input type="date" id="from-input"/>
 							<br />
-							To: <input type="date" />
+							To: <input type="date" id="to-input"/>
 						</p>
+						<button class="button" onClick={() => handleBooking()}>Book!</button>
 					</section>
 				</div>
 				<button

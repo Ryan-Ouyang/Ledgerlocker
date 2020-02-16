@@ -65,7 +65,7 @@ app.get("/api/listings", function(req, res) {
   const listings = [
     {
       name: "Lovely Micro-Studio in Forest Park, GA",
-      key: 1,
+      id: 1,
       address: "Forest Park, GA",
       rent: "45 DAI/day",
       stake: 2,
@@ -84,7 +84,7 @@ app.get("/api/listings", function(req, res) {
     },
     {
       name: "Cosy Apartment in Denver, CO",
-      key: 2,
+      id: 2,
       address: "Denver, CO",
       rent: "50 DAI/day",
       stake: 2,

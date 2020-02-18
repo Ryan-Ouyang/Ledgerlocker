@@ -1,6 +1,6 @@
 ![Header](readme/Header.png)
 
-Presentation - https://drive.google.com/file/d/1pp87Ic61vqj5aMQDQQ_8UXP7o-WDia0p/view
+Presentation - https://drive.google.com/file/d/1pp87Ic61vqj5aMQDQQ_8UXP7o-WDia0p/view 
 
 Finalist Demo - https://youtu.be/hFr8ly7EFJs?t=8835
 
@@ -10,15 +10,13 @@ Team:
 - Ryan Ouyang (Wertsdf#1773)
 - Jonathan Xu (Jonathan#1335)
 
-Bounties:
-- Maker Foundation DSR Challenge
-- Best Overall 3Box Integration
-- Best Use of 3Box Storage
-- Build the Best bZx Product
+Awards Won:
 - Best Project With Fortmatic Integration
 - Infura API Usage
-- Pepo The UX Awards!
+- Pepo UX Award
 - The Graph - Build a subgraph to index your smart contracts
+- Danny Ryan's Choice
+
 # Inspiration
 #BUILDLed at ETHDenver 2020
 

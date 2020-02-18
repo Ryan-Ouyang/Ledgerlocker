@@ -1,6 +1,7 @@
 ![Header](readme/Header.png)
 
 Presentation - https://drive.google.com/file/d/1pp87Ic61vqj5aMQDQQ_8UXP7o-WDia0p/view
+Finalist Demo - https://youtu.be/hFr8ly7EFJs?t=8835
 
 Team:
 - Haardik (B8##0642)

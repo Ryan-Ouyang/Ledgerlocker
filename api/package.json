@@ -21,7 +21,7 @@
     "ethereumjs-tx": "^2.1.2",
     "express": "^4.17.1",
     "graphql-request": "^1.8.2",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.4.0",
     "web3": "^1.2.6"
   }
 }
